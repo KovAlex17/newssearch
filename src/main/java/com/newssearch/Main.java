@@ -1,36 +1,32 @@
 package com.newssearch;
 
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedInput;
-import com.sun.syndication.io.XmlReader;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.List;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            // Укажите URL RSS-канала
-            String url = "https://media.kpfu.ru/news-rss";
-            URL feedUrl = new URL(url);
 
-            // Сохраните содержимое RSS-канала в файл
-            try (InputStream inputStream = feedUrl.openStream();
-                 FileOutputStream outputStream = new FileOutputStream("feed.xml")) {
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-                System.out.println("RSS-канал сохранен в файл feed.xml");
+            Document doc = Jsoup.connect("https://media.kpfu.ru/news?kn%5B0%5D=%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8%20%D0%BD%D0%B0%D1%83%D0%BA%D0%B8&created").get();
+
+            Elements newsItems = doc.select(".newsItem-content");
+
+            for (Element newsItem : newsItems) {
+                String title = newsItem.select(".newsItem-top a.boldLink").text();
+                String link = newsItem.select("a").attr("href");
+                String date = newsItem.select(".newsItem-date").text();
+
+                System.out.println("Title: " + title);
+                System.out.println("Link: " + link);
+                System.out.println("Date: " + date);
+                System.out.println();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
