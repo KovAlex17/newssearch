@@ -22,8 +22,6 @@ public class NewsController {
             if (!newsItems.isEmpty()) {
                 Document doc = Jsoup.connect(newsItems.get(0).getMainUrlSelector() + "/" + newsItems.get(0).getUrlSelector()).get();
                 Elements items = doc.select(newsItems.get(0).getItemSelector());
-                //System.out.println(items.isEmpty());
-                //System.out.println(items);
 
                 for (Element newsItem : items) {
                     String title = newsItem.select(newsItems.get(0).getTitleSelector()).text();
@@ -33,9 +31,20 @@ public class NewsController {
 
                     String date = newsItem.select(newsItems.get(0).getDateSelector()).text();
 
+
+
+                    String text = extractText(newsItems.get(0).getTextSelector(), link);
+
+                    //Document textDoc = Jsoup.connect(link).get();
+                    //Element articleContent = textDoc.selectFirst(newsItems.get(0).getTextSelector());
+                    //String text = articleContent.selectFirst(newsItems.get(0).getTextSelector()).text();
+
+
+
                     System.out.println("Title: " + title);
                     System.out.println("Link: " + link);
                     System.out.println("Date: " + date);
+                    System.out.println("Text: " + text);
                     System.out.println();
                 }
 
@@ -48,6 +57,26 @@ public class NewsController {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private String extractText(String textSelector, String link){
+        try {
+            Document textDoc = Jsoup.connect(link).get();
+            Element articleContent = textDoc.selectFirst(textSelector);
+
+            if (articleContent != null) {
+                return articleContent.text();
+            } else {
+                //logger.warn("Article content not found on page: {}", link);
+                System.err.println("Article content not found on page: " + link);
+                return "";
+            }
+
+        } catch (IOException e) {
+            System.err.println("Failed to fetch article: " + link);
+            e.printStackTrace();
+            return "";
+        }
     }
 
 
