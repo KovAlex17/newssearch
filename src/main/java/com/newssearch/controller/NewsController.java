@@ -1,6 +1,6 @@
 package com.newssearch.controller;
 
-import com.newssearch.model.HtmlFeed;
+import com.newssearch.model.HtmlSelector;
 import com.newssearch.service.InputTxtParser;
 
 import org.jsoup.Jsoup;
@@ -9,12 +9,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class NewsController {
-    List<HtmlFeed> newsItems = new ArrayList<>();
+    List<HtmlSelector> newsItems;
 
     public NewsController() {
         try {
@@ -23,6 +22,8 @@ public class NewsController {
             if (!newsItems.isEmpty()) {
                 Document doc = Jsoup.connect(newsItems.get(0).getUrlSelector()).get();
                 Elements items = doc.select(newsItems.get(0).getItemSelector());
+                //System.out.println(items.isEmpty());
+                //System.out.println(items);
 
                 for (Element newsItem : items) {
                     String title = newsItem.select(newsItems.get(0).getTitleSelector()).text();

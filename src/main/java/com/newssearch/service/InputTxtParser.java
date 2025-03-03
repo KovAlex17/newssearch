@@ -1,6 +1,6 @@
 package com.newssearch.service;
 
-import com.newssearch.model.HtmlFeed;
+import com.newssearch.model.HtmlSelector;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputTxtParser {
-    public static List<HtmlFeed> readNewsFromFile(String filePath) throws IOException {
-        List<HtmlFeed> newsItems = new ArrayList<>();
+
+    public static List<HtmlSelector> readNewsFromFile(String filePath) throws IOException {
+        List<HtmlSelector> newsItems = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
         String line;
@@ -25,7 +26,13 @@ public class InputTxtParser {
                 String linkSelector = parts[3].trim();
                 String dateSelector = parts[4].trim();
 
-                newsItems.add(new HtmlFeed(urlSelector, itemSelector, titleSelector, linkSelector, dateSelector));
+                /*System.out.println(urlSelector);
+                System.out.println(itemSelector);
+                System.out.println(titleSelector);
+                System.out.println(linkSelector);
+                System.out.println(dateSelector);*/
+
+                newsItems.add(new HtmlSelector(urlSelector, itemSelector, titleSelector, linkSelector, dateSelector));
             } else {
                 System.err.println("Invalid line format: " + line);
             }
