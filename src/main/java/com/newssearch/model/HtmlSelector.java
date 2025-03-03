@@ -1,18 +1,28 @@
 package com.newssearch.model;
 
 public class HtmlSelector {
+    private String mainUrlSelector;
     private String urlSelector;
     private String itemSelector;
     private String titleSelector;
     private String linkSelector;
     private String dateSelector;
 
-    public HtmlSelector(String urlSelector, String itemSelector, String titleSelector, String linkSelector, String dateSelector) {
+    public HtmlSelector( String mainUrlSelector, String urlSelector, String itemSelector, String titleSelector, String linkSelector, String dateSelector) {
+        this.mainUrlSelector = mainUrlSelector;
         this.urlSelector = urlSelector;
         this.itemSelector = itemSelector;
         this.titleSelector = titleSelector;
         this.linkSelector = linkSelector;
         this.dateSelector = dateSelector;
+    }
+
+    public String getMainUrlSelector() {
+        return mainUrlSelector;
+    }
+
+    public void setMainUrlSelector(String mainUrlSelector) {
+        this.mainUrlSelector = mainUrlSelector;
     }
 
     public String getUrlSelector() {

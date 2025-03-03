@@ -19,12 +19,13 @@ public class InputTxtParser {
 
             String[] parts = line.split(" ; ");
 
-            if (parts.length == 5) {
-                String urlSelector = parts[0].trim();
-                String itemSelector = parts[1].trim();
-                String titleSelector = parts[2].trim();
-                String linkSelector = parts[3].trim();
-                String dateSelector = parts[4].trim();
+            if (parts.length == 6) {
+                String mainUrlSelector = parts[0].trim();
+                String urlSelector = parts[1].trim();
+                String itemSelector = parts[2].trim();
+                String titleSelector = parts[3].trim();
+                String linkSelector = parts[4].trim();
+                String dateSelector = parts[5].trim();
 
                 /*System.out.println(urlSelector);
                 System.out.println(itemSelector);
@@ -32,7 +33,7 @@ public class InputTxtParser {
                 System.out.println(linkSelector);
                 System.out.println(dateSelector);*/
 
-                newsItems.add(new HtmlSelector(urlSelector, itemSelector, titleSelector, linkSelector, dateSelector));
+                newsItems.add(new HtmlSelector(mainUrlSelector, urlSelector, itemSelector, titleSelector, linkSelector, dateSelector));
             } else {
                 System.err.println("Invalid line format: " + line);
             }
