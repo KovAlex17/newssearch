@@ -11,48 +11,54 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.List;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class NewsController {
-    List<HtmlSelector> newsItems;
+    List<HtmlSelector> newsFeeds;
 
     public NewsController() {
         try {
-            newsItems = InputTxtParser.readNewsFromFile("src/main/resources/news.txt");
+            newsFeeds = InputTxtParser.readNewsFromFile("src/main/resources/news.txt");
+            if (!newsFeeds.isEmpty()) {
+                ExecutorService executorService = Executors.newFixedThreadPool(3);
 
-            if (!newsItems.isEmpty()) {
-                Document doc = Jsoup.connect(newsItems.get(0).getMainUrlSelector() + "/" + newsItems.get(0).getUrlSelector()).get();
-                Elements items = doc.select(newsItems.get(0).getItemSelector());
+                for (HtmlSelector newsFeed : newsFeeds) {
+                    CompletableFuture.runAsync(() -> handlingNewsFeed(newsFeed), executorService)
+                            .exceptionally(ex -> {
+                                System.err.println("Error handling news feeds: " + ex.getMessage());
+                                return null;
+                            });
+                }
+                executorService.shutdown();
+            } else {
+                System.out.println("No news feeds found in the file.");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-                for (Element newsItem : items) {
-                    String title = newsItem.select(newsItems.get(0).getTitleSelector()).text();
+    private void handlingNewsFeed(HtmlSelector selector){
+        try {
+            Document doc = Jsoup.connect(selector.getMainUrlSelector() + "/" + selector.getUrlSelector()).get();
+            Elements items = doc.select(selector.getItemSelector());
 
-                    String preLink = newsItem.select("a").attr(newsItems.get(0).getLinkSelector());
-                    String link = newsItems.get(0).getMainUrlSelector() + preLink;
+            for (Element newsItem : items) {
+                String title = newsItem.select(selector.getTitleSelector()).text();
+                String link = selector.getMainUrlSelector() + newsItem.select("a").attr(selector.getLinkSelector());
+                String date = newsItem.select(selector.getDateSelector()).text();
+                String text = extractText(selector.getTextSelector(), link);
 
-                    String date = newsItem.select(newsItems.get(0).getDateSelector()).text();
-
-
-
-                    String text = extractText(newsItems.get(0).getTextSelector(), link);
-
-                    //Document textDoc = Jsoup.connect(link).get();
-                    //Element articleContent = textDoc.selectFirst(newsItems.get(0).getTextSelector());
-                    //String text = articleContent.selectFirst(newsItems.get(0).getTextSelector()).text();
-
-
-
+                synchronized (System.out) {
                     System.out.println("Title: " + title);
                     System.out.println("Link: " + link);
                     System.out.println("Date: " + date);
                     System.out.println("Text: " + text);
                     System.out.println();
                 }
-
-
-            } else {
-                System.out.println("No news items found in the file.");
             }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -67,17 +73,13 @@ public class NewsController {
             if (articleContent != null) {
                 return articleContent.text();
             } else {
-                //logger.warn("Article content not found on page: {}", link);
                 System.err.println("Article content not found on page: " + link);
                 return "";
             }
-
         } catch (IOException e) {
             System.err.println("Failed to fetch article: " + link);
             e.printStackTrace();
             return "";
         }
     }
-
-
 }
