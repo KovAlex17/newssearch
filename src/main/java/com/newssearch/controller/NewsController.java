@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import java.util.concurrent.CompletableFuture;
@@ -22,7 +23,7 @@ public class NewsController {
         try {
             newsFeeds = InputTxtParser.readNewsFromFile("src/main/resources/news.txt");
             if (!newsFeeds.isEmpty()) {
-                ExecutorService executorService = Executors.newFixedThreadPool(3);
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
 
                 for (HtmlSelector newsFeed : newsFeeds) {
                     CompletableFuture.runAsync(() -> handlingNewsFeed(newsFeed), executorService)
@@ -41,15 +42,40 @@ public class NewsController {
     }
 
     private void handlingNewsFeed(HtmlSelector selector){
+        String url = "URL: ";
+        boolean BFUlinkDetector = false;
         try {
-            Document doc = Jsoup.connect(selector.getMainUrlSelector() + "/" + selector.getUrlSelector()).get();
+            url = selector.getMainUrlSelector() + "/" + selector.getUrlSelector();
+            Document doc = Jsoup.connect(url).get();
             Elements items = doc.select(selector.getItemSelector());
+
+            System.out.println(items.isEmpty());
 
             for (Element newsItem : items) {
                 String title = newsItem.select(selector.getTitleSelector()).text();
-                String link = selector.getMainUrlSelector() + newsItem.select("a").attr(selector.getLinkSelector());
+
+                String link = "";
+                Elements links = newsItem.select("a");
+                for (Element a : links) {
+                    String href = a.attr(selector.getLinkSelector());
+                    if (!href.contains("?")  ) {
+                        link = selector.getMainUrlSelector() + href;
+                    }
+                    if (href.contains("//")){
+                        link = href;
+                        BFUlinkDetector = true;
+                    }
+                }
+                //link = selector.getMainUrlSelector() + newsItem.select("a").attr(selector.getLinkSelector());
+
                 String date = newsItem.select(selector.getDateSelector()).text();
-                String text = extractText(selector.getTextSelector(), link);
+                String text;
+                if (!BFUlinkDetector) {
+                    text = extractText(selector.getTextSelector(), link);
+                } else {
+                    text = "Чтение статей из внешних источников не реализовано".toUpperCase();
+                    BFUlinkDetector = false;
+                }
 
                 synchronized (System.out) {
                     System.out.println("Title: " + title);
@@ -59,10 +85,14 @@ public class NewsController {
                     System.out.println();
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        } catch (UnknownHostException e){
+            System.err.println("Skipping invalid link (UnknownHostException): " + url);
         }
 
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String extractText(String textSelector, String link){
