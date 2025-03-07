@@ -1,6 +1,7 @@
 package com.newssearch.model;
 
 public class HtmlSelector {
+    private String group;
     private String mainUrlSelector;
     private String urlSelector;
     private String itemSelector;
@@ -9,7 +10,8 @@ public class HtmlSelector {
     private String dateSelector;
     private String textSelector;
 
-    public HtmlSelector( String mainUrlSelector, String urlSelector, String itemSelector, String titleSelector, String linkSelector, String dateSelector, String textSelector) {
+    public HtmlSelector(String group, String mainUrlSelector, String urlSelector, String itemSelector, String titleSelector, String linkSelector, String dateSelector, String textSelector) {
+        this.group = group;
         this.mainUrlSelector = mainUrlSelector;
         this.urlSelector = urlSelector;
         this.itemSelector = itemSelector;
@@ -18,61 +20,38 @@ public class HtmlSelector {
         this.dateSelector = dateSelector;
         this.textSelector = textSelector;
 
+    }
+
+    public String getGroup() {
+        return group;
     }
 
     public String getMainUrlSelector() {
         return mainUrlSelector;
     }
 
-    public void setMainUrlSelector(String mainUrlSelector) {
-        this.mainUrlSelector = mainUrlSelector;
-    }
-
     public String getUrlSelector() {
         return urlSelector;
-    }
-
-    public void setUrlSelector(String urlSelector) {
-        this.urlSelector = urlSelector;
     }
 
     public String getItemSelector() {
         return itemSelector;
     }
 
-    public void setItemSelector(String itemSelector) {
-        this.itemSelector = itemSelector;
-    }
-
     public String getTitleSelector() {
         return titleSelector;
-    }
-
-    public void setTitleSelector(String titleSelector) {
-        this.titleSelector = titleSelector;
     }
 
     public String getLinkSelector() {
         return linkSelector;
     }
 
-    public void setLinkSelector(String linkSelector) {
-        this.linkSelector = linkSelector;
-    }
-
     public String getDateSelector() {
         return dateSelector;
-    }
-
-    public void setDateSelector(String dateSelector) {
-        this.dateSelector = dateSelector;
     }
 
     public String getTextSelector() {
         return textSelector;
     }
 
-    public void setTextSelector(String textSelector) {
-        this.textSelector = textSelector;
-    }
 }

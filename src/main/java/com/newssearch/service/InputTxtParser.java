@@ -15,11 +15,25 @@ public class InputTxtParser {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
         String line;
+        String group = "NuN University";
         while ((line = reader.readLine()) != null) {
 
             String[] parts = line.split(" ; ");
 
-            if (parts.length == 7) {
+            if(parts.length == 1 && !parts[0].trim().isEmpty()){
+                switch (parts[0].trim()){
+                    case "FederalUniversities":
+                        group = "FederalUniversities";
+                        break;
+                    case "NationalUniversities":
+                        group = "NationalUniversities";
+                        break;
+                    case "FlagshipUniversities":
+                        group = "FlagshipUniversities";
+                        break;
+                    default: System.out.println("Incorrect University Group");
+                }
+            } else if (parts.length == 7) {
                 String mainUrlSelector = parts[0].trim();
                 String urlSelector = parts[1].trim();
                 String itemSelector = parts[2].trim();
@@ -28,7 +42,7 @@ public class InputTxtParser {
                 String dateSelector = parts[5].trim();
                 String textSelector = parts[6].trim();
 
-                newsItems.add(new HtmlSelector(mainUrlSelector, urlSelector, itemSelector, titleSelector, linkSelector, dateSelector, textSelector));
+                newsItems.add(new HtmlSelector(group, mainUrlSelector, urlSelector, itemSelector, titleSelector, linkSelector, dateSelector, textSelector));
             } else {
                 System.err.println("Invalid line format: " + line);
             }
