@@ -15,7 +15,7 @@ public class BDController {
 
             MongoDatabase database = client.getDatabase("UniversityNewsFeeds");
 
-            String universityName = extractRootDomain(message.getLink());
+            String universityName = message.getUniversityName();
             MongoCollection<Document> universityCollection = database.getCollection(message.getGroup() + "_" + universityName);
 
             Document fuNews = new Document("_id", getShortTitle(message.getTitle()))
@@ -41,7 +41,7 @@ public class BDController {
         long idMatches = collection.countDocuments(idQuery);
 
         if (idMatches != 0) {
-            Document linkQuery = new Document(idQuery) // Используем idQuery как основу
+            Document linkQuery = new Document(idQuery)
                     .append("link", news.getString("link"));
             return !(collection.countDocuments(linkQuery) > 0);
 
@@ -52,24 +52,4 @@ public class BDController {
         return title.length() > 50 ? title.substring(0, 45) : title;
     }
 
-    public static String extractRootDomain(String url) {
-
-        int protocolIndex = url.indexOf("://");
-        String domain = protocolIndex != -1 ? url.substring(protocolIndex + 3) : url;
-
-        int pathIndex = domain.indexOf('/');
-        if (pathIndex != -1) {
-            domain = domain.substring(0, pathIndex);
-        }
-
-        // Разделяем домен по точкам
-        String[] parts = domain.split("\\.");
-
-        // Берём предпоследнюю часть
-        if (parts.length >= 2) {
-            return parts[parts.length - 2]; // Предпоследний элемент
-        }
-
-        return domain; // Если что-то пошло не так, возвращаем весь домен
-    }
 }
