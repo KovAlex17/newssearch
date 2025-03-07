@@ -10,25 +10,27 @@ import org.bson.Document;
 
 public class BDController {
     public static void BDWrite(MessageContainer message) {
+        String connectionString = "mongodb://kovalev:bF%3C8!Rac%3FfmQHYjg9G*k2%40@db.sciencepulse.ru:27017/?ssl=true&authSource=admin&authMechanism=SCRAM-SHA-1";  /* "mongodb://localhost:27017" */
+        try (MongoClient client = MongoClients.create(connectionString)) {
 
-        try (MongoClient client = MongoClients.create("mongodb://localhost:27017")) {
-
-            MongoDatabase database = client.getDatabase("UniversityNewsFeeds");
+            MongoDatabase database = client.getDatabase("priorities");
 
             String universityName = message.getUniversityName();
             MongoCollection<Document> universityCollection = database.getCollection(message.getGroup() + "_" + universityName);
 
-            Document fuNews = new Document("_id", getShortTitle(message.getTitle()))
+            Document unNews = new Document("_id", getShortTitle(message.getTitle()))
                     .append("title", message.getTitle())
                     .append("datePublished", message.getDate())
                     .append("link", message.getLink())
                     .append("text", message.getText());
 
-            if (isNotNewExists(universityCollection, fuNews)) {
-                universityCollection.insertOne(fuNews);
-                System.out.println("Добавлена новость для университета: " + universityName);
-            } else {
-                System.out.println("Новость уже существует для университета: " + universityName);
+            synchronized (universityCollection) {
+                if (isNotNewExists(universityCollection, unNews)) {
+                    universityCollection.insertOne(unNews);
+                    System.out.println("Добавлена новость для университета: " + universityName);
+                } else {
+                    System.out.println("Новость уже существует для университета: " + universityName);
+                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());

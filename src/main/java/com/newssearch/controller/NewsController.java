@@ -51,7 +51,6 @@ public class NewsController {
             Elements items = doc.select(selector.getItemSelector());
 
             for (Element newsItem : items) {
-
                 MessageContainer message = getMessageInfo(selector, newsItem, BFUlinkDetector);
                 BDController.BDWrite(message);
             }
@@ -80,7 +79,7 @@ public class NewsController {
                 BFUlinkDetector = true;
             }
         }
-        //link = selector.getMainUrlSelector() + newsItem.select("a").attr(selector.getLinkSelector());
+
         String date = newsItem.select(selector.getDateSelector()).text();
         String text;
         if (!BFUlinkDetector) {
