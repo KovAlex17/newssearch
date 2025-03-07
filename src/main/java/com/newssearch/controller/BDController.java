@@ -10,25 +10,27 @@ import org.bson.Document;
 
 public class BDController {
     public static void BDWrite(MessageContainer message) {
+        String connectionString = "mongodb://kovalev:bF%3C8!Rac%3FfmQHYjg9G*k2%40@db.sciencepulse.ru:27017/?ssl=true&authSource=admin&authMechanism=SCRAM-SHA-1";  /* "mongodb://localhost:27017" */
+        try (MongoClient client = MongoClients.create(connectionString)) {
 
-        try (MongoClient client = MongoClients.create("mongodb://localhost:27017")) {
+            MongoDatabase database = client.getDatabase("priorities");
 
-            MongoDatabase database = client.getDatabase("UniversityNewsFeeds");
-
-            String universityName = extractRootDomain(message.getLink());
+            String universityName = message.getUniversityName();
             MongoCollection<Document> universityCollection = database.getCollection(message.getGroup() + "_" + universityName);
 
-            Document fuNews = new Document("_id", getShortTitle(message.getTitle()))
+            Document unNews = new Document("_id", getShortTitle(message.getTitle()))
                     .append("title", message.getTitle())
                     .append("datePublished", message.getDate())
                     .append("link", message.getLink())
                     .append("text", message.getText());
 
-            if (isNotNewExists(universityCollection, fuNews)) {
-                universityCollection.insertOne(fuNews);
-                System.out.println("Добавлена новость для университета: " + universityName);
-            } else {
-                System.out.println("Новость уже существует для университета: " + universityName);
+            synchronized (universityCollection) {
+                if (isNotNewExists(universityCollection, unNews)) {
+                    universityCollection.insertOne(unNews);
+                    System.out.println("Добавлена новость для университета: " + universityName);
+                } else {
+                    System.out.println("Новость уже существует для университета: " + universityName);
+                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());
@@ -41,7 +43,7 @@ public class BDController {
         long idMatches = collection.countDocuments(idQuery);
 
         if (idMatches != 0) {
-            Document linkQuery = new Document(idQuery) // Используем idQuery как основу
+            Document linkQuery = new Document(idQuery)
                     .append("link", news.getString("link"));
             return !(collection.countDocuments(linkQuery) > 0);
 
@@ -52,24 +54,4 @@ public class BDController {
         return title.length() > 50 ? title.substring(0, 45) : title;
     }
 
-    public static String extractRootDomain(String url) {
-
-        int protocolIndex = url.indexOf("://");
-        String domain = protocolIndex != -1 ? url.substring(protocolIndex + 3) : url;
-
-        int pathIndex = domain.indexOf('/');
-        if (pathIndex != -1) {
-            domain = domain.substring(0, pathIndex);
-        }
-
-        // Разделяем домен по точкам
-        String[] parts = domain.split("\\.");
-
-        // Берём предпоследнюю часть
-        if (parts.length >= 2) {
-            return parts[parts.length - 2]; // Предпоследний элемент
-        }
-
-        return domain; // Если что-то пошло не так, возвращаем весь домен
-    }
 }

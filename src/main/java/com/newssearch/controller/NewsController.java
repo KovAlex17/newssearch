@@ -24,7 +24,7 @@ public class NewsController {
         try {
             newsFeeds = InputTxtParser.readNewsFromFile("src/main/resources/news.txt");
             if (!newsFeeds.isEmpty()) {
-                ExecutorService executorService = Executors.newFixedThreadPool(5);
+                ExecutorService executorService = Executors.newFixedThreadPool(6);
 
                 for (HtmlSelector newsFeed : newsFeeds) {
                     CompletableFuture.runAsync(() -> handlingNewsFeed(newsFeed), executorService)
@@ -51,12 +51,11 @@ public class NewsController {
             Elements items = doc.select(selector.getItemSelector());
 
             for (Element newsItem : items) {
-
                 MessageContainer message = getMessageInfo(selector, newsItem, BFUlinkDetector);
                 BDController.BDWrite(message);
             }
 
-        System.out.println("Новости успешно добавлены для университета " + url);
+        System.out.println("Обработана лента сайта " + url);
 
         } catch (UnknownHostException e){
             System.err.println("Skipping invalid link (UnknownHostException): " + url);
@@ -80,7 +79,7 @@ public class NewsController {
                 BFUlinkDetector = true;
             }
         }
-        //link = selector.getMainUrlSelector() + newsItem.select("a").attr(selector.getLinkSelector());
+
         String date = newsItem.select(selector.getDateSelector()).text();
         String text;
         if (!BFUlinkDetector) {
@@ -89,7 +88,28 @@ public class NewsController {
             text = "Чтение статей из внешних источников не реализовано".toUpperCase();
             BFUlinkDetector = false;
         }
-        return new MessageContainer(selector.getGroup(), title, link, date, text);
+        return new MessageContainer(extractRootDomain(selector.getMainUrlSelector()), selector.getGroup(), title, link, date, text);
+    }
+
+    public static String extractRootDomain(String url) {
+
+        int protocolIndex = url.indexOf("://");
+        String domain = protocolIndex != -1 ? url.substring(protocolIndex + 3) : url;
+
+        int pathIndex = domain.indexOf('/');
+        if (pathIndex != -1) {
+            domain = domain.substring(0, pathIndex);
+        }
+
+        // Разделяем домен по точкам
+        String[] parts = domain.split("\\.");
+
+        // Берём предпоследнюю часть
+        if (parts.length >= 2) {
+            return parts[parts.length - 2]; // Предпоследний элемент
+        }
+
+        return domain; // Если что-то пошло не так, возвращаем весь домен
     }
 
     private String extractText(String textSelector, String link){
