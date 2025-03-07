@@ -7,6 +7,5 @@ public class Main {
 
             NewsController newsController = new NewsController();
 
-
     }
 }
