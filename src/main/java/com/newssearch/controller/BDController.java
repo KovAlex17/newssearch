@@ -1,57 +1,57 @@
 package com.newssearch.controller;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
+
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.newssearch.model.MessageContainer;
 import org.bson.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class BDController {
-    public static void BDWrite(MessageContainer message) {
-        String connectionString = "mongodb://kovalev:bF%3C8!Rac%3FfmQHYjg9G*k2%40@db.sciencepulse.ru:27017/?ssl=true&authSource=admin&authMechanism=SCRAM-SHA-1";  /* "mongodb://localhost:27017" */
-        try (MongoClient client = MongoClients.create(connectionString)) {
+    public static void BDWrite(List<MessageContainer> messages, MongoCollection<Document> universityCollection, String universityName) {
+        try{
 
-            MongoDatabase database = client.getDatabase("priorities");
+            List<Document> newNews = new ArrayList<>();
 
-            String universityName = message.getUniversityName();
-            MongoCollection<Document> universityCollection = database.getCollection(message.getGroup() + "_" + universityName);
+            for(MessageContainer message : messages){
+                String newsId = extractPathAndQuery(message.getLink());
+                Document existingNews = universityCollection.find(new Document("_id", newsId)).first();
 
-            Document unNews = new Document("_id", getShortTitle(message.getTitle()))
-                    .append("title", message.getTitle())
-                    .append("datePublished", message.getDate())
-                    .append("link", message.getLink())
-                    .append("text", message.getText());
-
-            synchronized (universityCollection) {
-                if (isNotNewExists(universityCollection, unNews)) {
-                    universityCollection.insertOne(unNews);
-                    System.out.println("Добавлена новость для университета: " + universityName);
-                } else {
-                    System.out.println("Новость уже существует для университета: " + universityName);
+                if (existingNews == null) {
+                    newNews.add(new Document("_id", newsId)
+                            .append("title", message.getTitle())
+                            .append("datePublished", message.getDate())
+                            .append("link", message.getLink())
+                            .append("text", message.getText()));
                 }
             }
+
+            if (!newNews.isEmpty()) {
+                universityCollection.insertMany(newNews);
+                System.out.println("Добавлено " + newNews.size() + " новостей для университета: " + universityName);
+            }
+
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());
         }
     }
 
-    private static boolean isNotNewExists(MongoCollection<Document> collection, Document news) {
+    public static String extractPathAndQuery(String url) {
+        // Убираем протокол (если есть)
+        int protocolIndex = url.indexOf("://");
+        String domainAndPath = protocolIndex != -1 ? url.substring(protocolIndex + 3) : url;
 
-        Document idQuery = new Document("_id", news.get("_id"));
-        long idMatches = collection.countDocuments(idQuery);
+        // Находим начало пути (первый слэш после домена)
+        int pathIndex = domainAndPath.indexOf('/');
+        if (pathIndex == -1) {
+            // Если путь отсутствует, возвращаем пустую строку
+            return "";
+        }
 
-        if (idMatches != 0) {
-            Document linkQuery = new Document(idQuery)
-                    .append("link", news.getString("link"));
-            return !(collection.countDocuments(linkQuery) > 0);
-
-        } else return true;
-    }
-
-    private static String getShortTitle(String title) {
-        return title.length() > 50 ? title.substring(0, 45) : title;
+        // Возвращаем всё, что после домена
+        return domainAndPath.substring(pathIndex);
     }
 
 }

@@ -1,4 +1,3 @@
 package com.newssearch.service;
 
-public class HtmlFeedParser {
-}
+public class HtmlFeedParser {}

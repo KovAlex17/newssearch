@@ -1,14 +1,14 @@
 package com.newssearch.model;
 
 public class HtmlSelector {
-    private String group;
-    private String mainUrlSelector;
-    private String urlSelector;
-    private String itemSelector;
-    private String titleSelector;
-    private String linkSelector;
-    private String dateSelector;
-    private String textSelector;
+    private final String group;
+    private final String mainUrlSelector;
+    private final String urlSelector;
+    private final String itemSelector;
+    private final String titleSelector;
+    private final String linkSelector;
+    private final String dateSelector;
+    private final String textSelector;
 
     public HtmlSelector(String group, String mainUrlSelector, String urlSelector, String itemSelector, String titleSelector, String linkSelector, String dateSelector, String textSelector) {
         this.group = group;
@@ -19,12 +19,9 @@ public class HtmlSelector {
         this.linkSelector = linkSelector;
         this.dateSelector = dateSelector;
         this.textSelector = textSelector;
-
     }
 
-    public String getGroup() {
-        return group;
-    }
+    public String getGroup() { return group; }
 
     public String getMainUrlSelector() {
         return mainUrlSelector;

@@ -1,5 +1,9 @@
 package com.newssearch.controller;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.newssearch.model.HtmlSelector;
 import com.newssearch.model.MessageContainer;
 import com.newssearch.service.InputTxtParser;
@@ -11,6 +15,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.concurrent.CompletableFuture;
@@ -24,7 +29,7 @@ public class NewsController {
         try {
             newsFeeds = InputTxtParser.readNewsFromFile("src/main/resources/news.txt");
             if (!newsFeeds.isEmpty()) {
-                ExecutorService executorService = Executors.newFixedThreadPool(6);
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
 
                 for (HtmlSelector newsFeed : newsFeeds) {
                     CompletableFuture.runAsync(() -> handlingNewsFeed(newsFeed), executorService)
@@ -50,10 +55,21 @@ public class NewsController {
             Document doc = Jsoup.connect(url).get();
             Elements items = doc.select(selector.getItemSelector());
 
+            String connectionString = "mongodb://kovalev:bF%3C8!Rac%3FfmQHYjg9G*k2%40@db.sciencepulse.ru:27017/?ssl=true&authSource=admin&authMechanism=SCRAM-SHA-1";  /* "mongodb://localhost:27017" */
+            MongoClient client = MongoClients.create(connectionString);
+            MongoDatabase database = client.getDatabase("priorities");
+
+            MongoCollection<org.bson.Document> universityCollection =
+                    database.getCollection(selector.getGroup() + "_" + extractRootDomain(selector.getMainUrlSelector()));
+
+
+            List<MessageContainer> messages = new ArrayList<>();
             for (Element newsItem : items) {
                 MessageContainer message = getMessageInfo(selector, newsItem, BFUlinkDetector);
-                BDController.BDWrite(message);
+                messages.add(message);
             }
+
+            BDController.BDWrite(messages, universityCollection, extractRootDomain(selector.getMainUrlSelector()));
 
         System.out.println("Обработана лента сайта " + url);
 
@@ -88,7 +104,7 @@ public class NewsController {
             text = "Чтение статей из внешних источников не реализовано".toUpperCase();
             BFUlinkDetector = false;
         }
-        return new MessageContainer(extractRootDomain(selector.getMainUrlSelector()), selector.getGroup(), title, link, date, text);
+        return new MessageContainer(title, link, date, text);
     }
 
     public static String extractRootDomain(String url) {
