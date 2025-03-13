@@ -29,7 +29,7 @@ public class NewsController {
         try {
             newsFeeds = InputTxtParser.readNewsFromFile("src/main/resources/news.txt");
             if (!newsFeeds.isEmpty()) {
-                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                ExecutorService executorService = Executors.newFixedThreadPool(8);
 
                 for (HtmlSelector newsFeed : newsFeeds) {
                     CompletableFuture.runAsync(() -> handlingNewsFeed(newsFeed), executorService)
@@ -46,27 +46,33 @@ public class NewsController {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Метод, обрабатывающий новостную новость. Принимает соответствующий селектор
+     */
     private void handlingNewsFeed(HtmlSelector selector){
+
         String url = "";
         boolean BFUlinkDetector = false;
-        try {
+        String connectionString = "mongodb://kovalev:bF%3C8!Rac%3FfmQHYjg9G*k2%40@db.sciencepulse.ru:27017/?ssl=true&authSource=admin&authMechanism=SCRAM-SHA-1";  /* "mongodb://localhost:27017" */
+
+        try (MongoClient client = MongoClients.create(connectionString)){
+
             url = selector.getMainUrlSelector() + "/" + selector.getUrlSelector();
             Document doc = Jsoup.connect(url).get();
             Elements items = doc.select(selector.getItemSelector());
 
-            String connectionString = "mongodb://kovalev:bF%3C8!Rac%3FfmQHYjg9G*k2%40@db.sciencepulse.ru:27017/?ssl=true&authSource=admin&authMechanism=SCRAM-SHA-1";  /* "mongodb://localhost:27017" */
-            MongoClient client = MongoClients.create(connectionString);
             MongoDatabase database = client.getDatabase("priorities");
 
             MongoCollection<org.bson.Document> universityCollection =
                     database.getCollection(selector.getGroup() + "_" + extractRootDomain(selector.getMainUrlSelector()));
 
-
             List<MessageContainer> messages = new ArrayList<>();
             for (Element newsItem : items) {
                 MessageContainer message = getMessageInfo(selector, newsItem, BFUlinkDetector);
-                messages.add(message);
+                if(message != null) {
+                    messages.add(message);
+                    //System.out.println(message.getLink());
+                }
             }
 
             BDController.BDWrite(messages, universityCollection, extractRootDomain(selector.getMainUrlSelector()));
@@ -82,20 +88,30 @@ public class NewsController {
     }
 
     private MessageContainer getMessageInfo(HtmlSelector selector, Element newsItem, Boolean BFUlinkDetector){
-        String title = newsItem.select(selector.getTitleSelector()).text();
+
         String link = "";
         Elements links = newsItem.select("a");
-        for (Element a : links) {
-            String href = a.attr(selector.getLinkSelector());
+
+        //link = selector.getMainUrlSelector() + newsItem.select("a").attr(selector.getLinkSelector());
+
+        System.out.println(links.size());
+
+        for (Element el : links) {
+
+            String href = el.attr(selector.getLinkSelector());
+            if (href.contains("//")){
+                //link = href;
+                //BFUlinkDetector = true;
+                return null;
+            }
             if (!href.contains("?")  ) {
                 link = selector.getMainUrlSelector() + href;
             }
-            if (href.contains("//")){
-                link = href;
-                BFUlinkDetector = true;
-            }
+
         }
 
+
+        String title = newsItem.select(selector.getTitleSelector()).text();
         String date = newsItem.select(selector.getDateSelector()).text();
         String text;
         if (!BFUlinkDetector) {

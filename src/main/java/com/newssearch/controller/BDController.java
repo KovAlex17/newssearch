@@ -31,7 +31,7 @@ public class BDController {
             if (!newNews.isEmpty()) {
                 universityCollection.insertMany(newNews);
                 System.out.println("Добавлено " + newNews.size() + " новостей для университета: " + universityName);
-            }
+            } else { System.out.println("Добавлено 0 новостей для университета: " + universityName);}
 
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());
