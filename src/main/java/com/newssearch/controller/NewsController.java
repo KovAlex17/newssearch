@@ -89,6 +89,7 @@ public class NewsController {
 
     private MessageContainer getMessageInfo(HtmlSelector selector, Element newsItem, Boolean BFUlinkDetector){
 
+        int u = 0;
 
         String link = "";
         Elements links = newsItem.select("a");
