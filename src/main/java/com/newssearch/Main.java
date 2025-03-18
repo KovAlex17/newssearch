@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
 
             NewsController newsController = new NewsController();
+            newsController.startProcessing();
 
     }
 }

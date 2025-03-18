@@ -6,17 +6,19 @@ public class HtmlSelector {
     private final String urlSelector;
     private final String itemSelector;
     private final String titleSelector;
-    private final String linkSelector;
+    private final String link1Selector;
+    private final String link2Selector;
     private final String dateSelector;
     private final String textSelector;
 
-    public HtmlSelector(String group, String mainUrlSelector, String urlSelector, String itemSelector, String titleSelector, String linkSelector, String dateSelector, String textSelector) {
+    public HtmlSelector(String group, String mainUrlSelector, String urlSelector, String itemSelector, String titleSelector, String link1Selector, String link2Selector, String dateSelector, String textSelector) {
         this.group = group;
         this.mainUrlSelector = mainUrlSelector;
         this.urlSelector = urlSelector;
         this.itemSelector = itemSelector;
         this.titleSelector = titleSelector;
-        this.linkSelector = linkSelector;
+        this.link1Selector = link1Selector;
+        this.link2Selector = link2Selector;
         this.dateSelector = dateSelector;
         this.textSelector = textSelector;
     }
@@ -39,8 +41,12 @@ public class HtmlSelector {
         return titleSelector;
     }
 
-    public String getLinkSelector() {
-        return linkSelector;
+    public String getLink1Selector() {
+        return link1Selector;
+    }
+
+    public String getLink2Selector() {
+        return link2Selector;
     }
 
     public String getDateSelector() {

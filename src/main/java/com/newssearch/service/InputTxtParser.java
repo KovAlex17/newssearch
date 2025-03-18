@@ -33,16 +33,17 @@ public class InputTxtParser {
                         break;
                     default: System.out.println("Incorrect University Group");
                 }
-            } else if (parts.length == 7) {
+            } else if (parts.length == 8) {
                 String mainUrlSelector = parts[0].trim();
                 String urlSelector = parts[1].trim();
                 String itemSelector = parts[2].trim();
                 String titleSelector = parts[3].trim();
-                String linkSelector = parts[4].trim();
-                String dateSelector = parts[5].trim();
-                String textSelector = parts[6].trim();
+                String link1Selector = parts[4].trim();
+                String link2Selector = parts[5].trim();
+                String dateSelector = parts[6].trim();
+                String textSelector = parts[7].trim();
 
-                newsItems.add(new HtmlSelector(group, mainUrlSelector, urlSelector, itemSelector, titleSelector, linkSelector, dateSelector, textSelector));
+                newsItems.add(new HtmlSelector(group, mainUrlSelector, urlSelector, itemSelector, titleSelector, link1Selector, link2Selector, dateSelector, textSelector));
             } else {
                 System.err.println("Invalid line format: " + line);
             }
