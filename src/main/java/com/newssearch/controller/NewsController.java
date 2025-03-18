@@ -5,6 +5,8 @@ import com.newssearch.model.MessageContainer;
 import com.newssearch.service.DatabaseManager;
 import com.newssearch.service.NewsFeedProcessor;
 import com.newssearch.service.NewsFeedReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +25,8 @@ public class NewsController {
         this.databaseManager = new DatabaseManager();
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
+
     /**
      * Запускает процесс обработки новостных лент.
      */
@@ -35,16 +39,17 @@ public class NewsController {
                 for (HtmlSelector newsFeed : newsFeeds) {
                     CompletableFuture.runAsync(() -> processNewsFeed(newsFeed), executorService)
                             .exceptionally(ex -> {
-                                System.err.println("Error handling news feeds: " + ex.getMessage());
+                                logger.error("Error handling news feeds: {}", ex.getMessage(), ex);
                                 return null;
                             });
                 }
                 executorService.shutdown();
             } else {
-                System.out.println("No news feeds found in the file.");
+                logger.info("No news feeds found in the file.");
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read news feeds from file", e);
+            logger.error("Failed to read news feeds from file", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -60,11 +65,12 @@ public class NewsController {
                 String collectionName = selector.getGroup() + "_" + extractRootDomain(selector.getMainUrlSelector());
                 String universityName = extractRootDomain(selector.getMainUrlSelector());
 
-                //databaseManager.writeMessages(messages, collectionName, universityName);
-                System.out.println("Обработана лента сайта " + selector.getMainUrlSelector());
+                databaseManager.writeMessages(messages, collectionName, universityName);
+
+                logger.info("Обработана лента сайта {}", selector.getMainUrlSelector());
             }
         } catch (IOException e) {
-            System.err.println("Ошибка при обработке новостной ленты: " + e.getMessage());
+            logger.error("Ошибка при обработке новостной ленты", e);
         }
     }
 
