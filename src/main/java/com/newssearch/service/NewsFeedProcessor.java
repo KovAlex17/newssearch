@@ -27,17 +27,19 @@ public class NewsFeedProcessor {
 
         try {
             Document doc = Jsoup.connect(url).get();
+            //System.out.println(doc);
             Elements items = doc.select(selector.getItemSelector());
+            System.out.println(items.size());
 
             for (Element newsItem : items) {
                 MessageContainer message = getMessageInfo(selector, newsItem);
                 if (message != null) {
                     messages.add(message);
-                    System.out.println("Title: " + message.getTitle());
+                    /*System.out.println("Title: " + message.getTitle());
                     System.out.println("Link: " + message.getLink());
                     System.out.println("Date: " + message.getDate());
                     System.out.println("Text: " + message.getText());
-                    System.out.println(" ");
+                    System.out.println(" ");*/
                 }
             }
         } catch (UnknownHostException e) {
@@ -56,17 +58,32 @@ public class NewsFeedProcessor {
      */
     private MessageContainer getMessageInfo(HtmlSelector selector, Element newsItem) {
         String href = newsItem.select(selector.getLink1Selector()).attr(selector.getLink2Selector());
-        String link = href.startsWith(selector.getMainUrlSelector()) ? href : selector.getMainUrlSelector() + href;
+        //System.out.println(href);
 
-        if (href.contains("//")) {
-            return null;
-        }
+            /* Если ссылка ведет на внешний источник, она игнорируется */
+        if (isExternalLink(href, selector.getMainUrlSelector())) { return null; }
+            /* Если ссылка на url внутри json, parse её дальше */
+        if(href.startsWith("{")) { href = extractLinkFromJson(href); }
+        String link = href.startsWith(selector.getMainUrlSelector()) ? href : selector.getMainUrlSelector() + href;
 
         String title = newsItem.select(selector.getTitleSelector()).text();
         String date = newsItem.select(selector.getDateSelector()).text();
+        if(date.equals("вчера")) return null;
         String text = extractText(selector.getTextSelector(), link);
 
         return new MessageContainer(title, link, date, text);
+    }
+
+    private boolean isExternalLink(String href, String mainUrl) {
+
+        // Если ссылка не содержит "://", она внутренняя
+        if (!href.contains("://")) {
+            return false;
+        }
+
+        // Если ссылка начинается с основного домена, она внутренняя
+        return !href.startsWith(mainUrl);
+
     }
 
     /**
@@ -79,10 +96,14 @@ public class NewsFeedProcessor {
     private String extractText(String textSelector, String link) {
         try {
             Document textDoc = Jsoup.connect(link).get();
-            Element articleContent = textDoc.selectFirst(textSelector);
 
-            if (articleContent != null) {
-                return articleContent.text();
+            Elements articleContentBlocks = textDoc.select(textSelector);
+            if (!articleContentBlocks.isEmpty()) {
+                StringBuilder textBuilder = new StringBuilder();
+                for (Element block : articleContentBlocks) {
+                    textBuilder.append(block.text()).append(" \n");
+                }
+                return textBuilder.toString().trim();
             } else {
                 System.err.println("Article content not found on page: " + link);
                 return "";
@@ -91,5 +112,15 @@ public class NewsFeedProcessor {
             System.err.println("Failed to fetch article: " + link);
             return "";
         }
+    }
+
+    private String extractLinkFromJson(String href){
+        /* Регулярное выражение для поиска значения ключа 'url' */
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("'url':'([^']+)'");
+        java.util.regex.Matcher matcher = pattern.matcher(href);
+        if (matcher.find()) {
+            return matcher.group(1); // Возвращаем значение ключа 'url'
+        }
+        return "Incorrect link extraction from JSON";
     }
 }

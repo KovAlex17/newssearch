@@ -36,7 +36,7 @@ public class InputTxtParser {
             } else if (parts.length == 8) {
                 String mainUrlSelector = parts[0].trim();
                 String urlSelector = parts[1].trim();
-                String itemSelector = parts[2].trim();
+                String itemSelector = parts[2];
                 String titleSelector = parts[3].trim();
                 String link1Selector = parts[4].trim();
                 String link2Selector = parts[5].trim();

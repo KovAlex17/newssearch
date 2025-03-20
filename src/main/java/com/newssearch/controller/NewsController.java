@@ -62,8 +62,8 @@ public class NewsController {
         try {
             List<MessageContainer> messages = newsFeedProcessor.processNewsFeed(selector);
             if (!messages.isEmpty()) {
-                String collectionName = selector.getGroup() + "_" + extractRootDomain(selector.getMainUrlSelector());
                 String universityName = extractRootDomain(selector.getMainUrlSelector());
+                String collectionName = selector.getGroup() + "_" + universityName;
 
                 databaseManager.writeMessages(messages, collectionName, universityName);
 
