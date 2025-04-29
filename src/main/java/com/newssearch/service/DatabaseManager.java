@@ -4,6 +4,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.newssearch.controller.ConfigManager;
 import com.newssearch.model.MessageContainer;
 import org.bson.Document;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
-    private static final String CONNECTION_STRING = "mongodb://kovalev:bF%3C8!Rac%3FfmQHYjg9G*k2%40@db.sciencepulse.ru:27017/?ssl=true&authSource=admin&authMechanism=SCRAM-SHA-1";
+    private static final String CONNECTION_STRING = ConfigManager.getMongoUri();
 
     /**
      * Записывает сообщения в коллекцию MongoDB.

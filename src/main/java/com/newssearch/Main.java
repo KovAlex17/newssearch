@@ -8,5 +8,8 @@ public class Main {
             NewsController newsController = new NewsController();
             newsController.startProcessing();
 
+            //NewsCombinerToCommonFile.combineNews();
+            //gptFilterService.gptFiltering();
+
     }
 }

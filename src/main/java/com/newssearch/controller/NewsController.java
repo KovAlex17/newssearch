@@ -34,7 +34,7 @@ public class NewsController {
         try {
             List<HtmlSelector> newsFeeds = newsFeedReader.readNewsFeeds("src/main/resources/news.txt");
             if (!newsFeeds.isEmpty()) {
-                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                ExecutorService executorService = Executors.newFixedThreadPool(2);
 
                 for (HtmlSelector newsFeed : newsFeeds) {
                     CompletableFuture.runAsync(() -> processNewsFeed(newsFeed), executorService)
