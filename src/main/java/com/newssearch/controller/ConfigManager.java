@@ -31,5 +31,4 @@ public class ConfigManager {
         return getProperty("openrouter.api.key");
     }
 
-
 }
