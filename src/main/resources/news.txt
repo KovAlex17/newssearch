@@ -3,27 +3,27 @@
  ; https://www.dvfu.ru ; science/news/ ; .row.news-item ; .news-item-short ; a ; href ; .news-item-date ; .news-item-full
  ; https://media.kpfu.ru ; news?kn%5B0%5D=%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8%20%D0%BD%D0%B0%D1%83%D0%BA%D0%B8&created ; .newsItem-content ; .newsItem-top a.boldLink ; a ; href ; .newsItem-date ; .body-text
 https://science.cfuv.ru ;   ; .vl-archive-post ; .entry-title ; h2.entry-title a ; href ; .entry-date ; .entry-content
-https://narfu.ru ; science/nac_project/news/index.php?sphrase_id=616406 ; .card-grid__item.ajax-load-more-item.1 ; .c-card__title ; a ; href ; .c-card__date ; .text_news
-https://ncfu.ru ; novosti/nauka/ ; .news__item ; .news__title ; a ; href ; .news__date ; .user-content.news-content
-https://news.sfu-kras.ru ; rubric/23 ; .news-item.teaser ; .news-item-annotation ; a ; href ; .news-item-date ; .text.not-teaser
+ ; https://narfu.ru ; science/nac_project/news/index.php?sphrase_id=616406 ; .card-grid__item.ajax-load-more-item.1 ; .c-card__title ; a ; href ; .c-card__date ; .text_news
+ ; https://ncfu.ru ; novosti/nauka/ ; .news__item ; .news__title ; a ; href ; .news__date ; .user-content.news-content
+ ; https://news.sfu-kras.ru ; rubric/23 ; .news-item.teaser ; .news-item-annotation ; a ; href ; .news-item-date ; .text.not-teaser
 
 
     NationalUniversities
-https://misis.ru ; university/news/science/ ; .article__inner ; h3 a ; h3 a ; href ; time[itemprop=datePublished] ; div.article__inner
-https://bsuedu.ru ; bsu/science/news-science/ ; .arhive-item ; .arhive_url ; a ; href ; .archive_displ_date ; .news_text_dlya_lentaev
-https://www.hse.ru ; news/science/ ; .post ; h2 a.link_dark2 ; a ; href ; .post-meta__date ; .builder--text
-https://www.istu.edu ; novosti/kategoria/30176 ; .news-item ; .news-item-header.link ; .news-item-header ; data-params ; .news-item-date ; .page-content
-https://mrsu.ru ; ru/sci/sciunis/news/ ; .voccc ; .header_news__in__back ; a ; href ; .date_news__in__back ; .text_main_news
-https://miet.ru ; news/tag/%D0%9D%D0%B0%D1%83%D0%BA%D0%B0 ; .news-list__item ; .news-list__item-title ; a ; href ; .news-list__item-date ; p , ul li, ol li
-https://mgsu.ru ; news/Nauka/ ; .news-list-item ; .news-title ; h3 a ; href ; .news-date ; .news-text
-https://kf.bmstu.ru ; news?t=%D0%BD%D0%B0%D1%83%D0%BA%D0%B0 ; .l-news-list-col ; .l-news-title ; a ; href ; .l-news-date ; .l-typography-text
-https://nauka.unn.ru ; news/ ; .news__item ; .news__item-title ; a.more-link.news__item-more ; href ; .news__item-date ; .content-style
-https://www.nsu.ru ; n/media/news/nauka ; .news-list-grid-item ; .name.link-issue ; a ; href ; .date ; article-content.p.detail_text
-https://pstu.ru ; activity/innovation/news/ ; .news_item ; .title ; a ; href ; .date ; .text p
-https://rsmu.ru ; research/our-research/novosti-nauki ; .smallBlock ; .smallBlockINmain h3 ; a ; href ; .newslistdate time ; .news-text-wrap
-https://ssau.ru ; news/tags?tag=%25D0%259D%25D0%25B0%25D1%2583%25D0%25BA%25D0%25B0 ; .card.mt-2 ; div.col-9 h5.card-title a ; div.col-9 h5.card-title a ; href ; div.col-9 p.card-text small.text-muted ; .col.news-content
-https://research.spbstu.ru ; news/ ; div.news-list-item__card ; a.news-list-item__title ; a.news-list-item__title ; href ; div.news-list-item__date ; div.media-page__content
-https://news.itmo.ru ; ru/science/ ; ul.triplet li ; h4 a ; li h4 a ; href ; time ; div.post-content > p:not(figcaption p):not(blockquote p), div.post-content > blockquote:not(:has(+ blockquote))
-https://www.sgu.ru ; news/section/32973 ; .news-feed__announce ; .field.field--name-title ; a ; href ; .news-feed__date-top ; .news-content__main p
-https://news.tpu.ru ; news/?science=true ; .news__content ; .news__title a ; a ; href ; time.news__date ; .text-content p
-https://www.susu.ru ; ru/news/science ; .node.node-news ; h2 a ; h2 a ; href ; .submitted ; .field-name-body p:not(.advertisement, .social-links, .footer), .field-name-body ul:not(.advertisement, .social-links, .footer), .field-name-body h3:not(.advertisement, .social-links, .footer)
+ ; https://misis.ru ; university/news/science/ ; .article__inner ; h3 a ; h3 a ; href ; time[itemprop=datePublished] ; div.article__inner
+ ; https://bsuedu.ru ; bsu/science/news-science/ ; .arhive-item ; .arhive_url ; a ; href ; .archive_displ_date ; .news_text_dlya_lentaev
+ ; https://www.hse.ru ; news/science/ ; .post ; h2 a.link_dark2 ; a ; href ; .post-meta__date ; .builder--text
+ ; https://www.istu.edu ; novosti/kategoria/30176 ; .news-item ; .news-item-header.link ; .news-item-header ; data-params ; .news-item-date ; .page-content
+ ; https://mrsu.ru ; ru/sci/sciunis/news/ ; .voccc ; .header_news__in__back ; a ; href ; .date_news__in__back ; .text_main_news
+ ; https://miet.ru ; news/tag/%D0%9D%D0%B0%D1%83%D0%BA%D0%B0 ; .news-list__item ; .news-list__item-title ; a ; href ; .news-list__item-date ; p , ul li, ol li
+ ; https://mgsu.ru ; news/Nauka/ ; .news-list-item ; .news-title ; h3 a ; href ; .news-date ; .news-text
+ ; https://kf.bmstu.ru ; news?t=%D0%BD%D0%B0%D1%83%D0%BA%D0%B0 ; .l-news-list-col ; .l-news-title ; a ; href ; .l-news-date ; .l-typography-text
+ ; https://nauka.unn.ru ; news/ ; .news__item ; .news__item-title ; a.more-link.news__item-more ; href ; .news__item-date ; .content-style
+ ; https://www.nsu.ru ; n/media/news/nauka ; .news-list-grid-item ; .name.link-issue ; a ; href ; .date ; article-content.p.detail_text
+ ; https://pstu.ru ; activity/innovation/news/ ; .news_item ; .title ; a ; href ; .date ; .text p
+ ; https://rsmu.ru ; research/our-research/novosti-nauki ; .smallBlock ; .smallBlockINmain h3 ; a ; href ; .newslistdate time ; .news-text-wrap
+ ; https://ssau.ru ; news/tags?tag=%25D0%259D%25D0%25B0%25D1%2583%25D0%25BA%25D0%25B0 ; .card.mt-2 ; div.col-9 h5.card-title a ; div.col-9 h5.card-title a ; href ; div.col-9 p.card-text small.text-muted ; .col.news-content
+ ; https://research.spbstu.ru ; news/ ; div.news-list-item__card ; a.news-list-item__title ; a.news-list-item__title ; href ; div.news-list-item__date ; div.media-page__content
+ ; https://news.itmo.ru ; ru/science/ ; ul.triplet li ; h4 a ; li h4 a ; href ; time ; div.post-content > p:not(figcaption p):not(blockquote p), div.post-content > blockquote:not(:has(+ blockquote))
+ ; https://www.sgu.ru ; news/section/32973 ; .news-feed__announce ; .field.field--name-title ; a ; href ; .news-feed__date-top ; .news-content__main p
+ ; https://news.tpu.ru ; news/?science=true ; .news__content ; .news__title a ; a ; href ; time.news__date ; .text-content p
+ ; https://www.susu.ru ; ru/news/science ; .node.node-news ; h2 a ; h2 a ; href ; .submitted ; .field-name-body p:not(.advertisement, .social-links, .footer), .field-name-body ul:not(.advertisement, .social-links, .footer), .field-name-body h3:not(.advertisement, .social-links, .footer)

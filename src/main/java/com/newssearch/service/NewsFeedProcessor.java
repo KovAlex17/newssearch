@@ -35,11 +35,11 @@ public class NewsFeedProcessor {
                 MessageContainer message = getMessageInfo(selector, newsItem);
                 if (message != null) {
                     messages.add(message);
-                    /*System.out.println("Title: " + message.getTitle());
-                    System.out.println("Link: " + message.getLink());
-                    System.out.println("Date: " + message.getDate());
-                    System.out.println("Text: " + message.getText());
-                    System.out.println(" ");*/
+//                    System.out.println("Title: " + message.getTitle());
+//                    System.out.println("Link: " + message.getLink());
+//                    System.out.println("Date: " + message.getDate());
+//                    System.out.println("Text: " + message.getText());
+//                    System.out.println(" ");
                 }
             }
         } catch (UnknownHostException e) {

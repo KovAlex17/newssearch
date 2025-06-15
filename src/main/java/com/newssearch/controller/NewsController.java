@@ -2,7 +2,9 @@ package com.newssearch.controller;
 
 import com.newssearch.model.HtmlSelector;
 import com.newssearch.model.MessageContainer;
+import com.newssearch.service.CSVservice.JSONtoCSVService;
 import com.newssearch.service.DatabaseManager;
+import com.newssearch.service.MessageToJSONtempClass;
 import com.newssearch.service.NewsFeedProcessor;
 import com.newssearch.service.NewsFeedReader;
 import org.slf4j.Logger;
@@ -19,10 +21,15 @@ public class NewsController {
     private final NewsFeedProcessor newsFeedProcessor;
     private final DatabaseManager databaseManager;
 
+    private final MessageToJSONtempClass messageToJSONtempClass;
+    private final JSONtoCSVService jsoNtoCSVService;
+
     public NewsController() {
         this.newsFeedReader = new NewsFeedReader();
         this.newsFeedProcessor = new NewsFeedProcessor();
         this.databaseManager = new DatabaseManager();
+        this.messageToJSONtempClass = new MessageToJSONtempClass();
+        this.jsoNtoCSVService = new JSONtoCSVService();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
@@ -34,7 +41,7 @@ public class NewsController {
         try {
             List<HtmlSelector> newsFeeds = newsFeedReader.readNewsFeeds("src/main/resources/news.txt");
             if (!newsFeeds.isEmpty()) {
-                ExecutorService executorService = Executors.newFixedThreadPool(2);
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
 
                 for (HtmlSelector newsFeed : newsFeeds) {
                     CompletableFuture.runAsync(() -> processNewsFeed(newsFeed), executorService)
@@ -65,7 +72,24 @@ public class NewsController {
                 String universityName = extractRootDomain(selector.getMainUrlSelector());
                 String collectionName = selector.getGroup() + "_" + universityName;
 
-                databaseManager.writeMessages(messages, collectionName, universityName);
+                //databaseManager.writeMessages(messages, collectionName, universityName);
+
+//                for (MessageContainer message : messages) {
+//                    messageToJSONtempClass.convertToJson(message);
+//                    System.out.println(messageToJSONtempClass.convertToJson(message));
+//                }
+
+
+                for (MessageContainer message : messages) {
+                    String jsonString = messageToJSONtempClass.convertToJson(message);
+                    jsoNtoCSVService.addJsonObject(jsonString);
+                    System.out.println(jsonString);
+                }
+                jsoNtoCSVService.printJsonArray();
+
+                // Записываем все накопленные объекты в CSV
+                jsoNtoCSVService.writeAllToCsv("messages.csv");
+
 
                 logger.info("Обработана лента сайта {}", selector.getMainUrlSelector());
             }

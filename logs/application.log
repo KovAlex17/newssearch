@@ -673,3 +673,83 @@ java.net.SocketTimeoutException: Read timed out
 2025-05-27 11:16:55 INFO  org.mongodb.driver.client - MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync", "version": "4.10.2"}, "os": {"type": "Windows", "name": "Windows 10", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/17.0.12+8-LTS-286"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=SCRAM-SHA-1, userName='kovalev', source='admin', password=<hidden>, mechanismProperties=<hidden>}, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@2f217633, com.mongodb.Jep395RecordCodecProvider@a530d0a, com.mongodb.KotlinCodecProvider@1a18644]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[db.sciencepulse.ru:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=true, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=UNSPECIFIED, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null}
 2025-05-27 11:16:55 INFO  org.mongodb.driver.cluster - Cluster description not yet available. Waiting for 30000 ms before timing out
 2025-05-27 11:16:57 INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=db.sciencepulse.ru:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=25, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=736342200}
+2025-06-13 16:29:13 INFO  org.mongodb.driver.client - MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync", "version": "4.10.2"}, "os": {"type": "Windows", "name": "Windows 10", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Microsoft/17.0.15+6-LTS"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=SCRAM-SHA-1, userName='kovalev', source='admin', password=<hidden>, mechanismProperties=<hidden>}, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@58d04d1b, com.mongodb.Jep395RecordCodecProvider@c014a5d, com.mongodb.KotlinCodecProvider@99bc15a]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[db.sciencepulse.ru:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=true, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=UNSPECIFIED, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null}
+2025-06-13 16:29:13 INFO  org.mongodb.driver.cluster - Cluster description not yet available. Waiting for 30000 ms before timing out
+2025-06-13 16:29:19 INFO  org.mongodb.driver.client - MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync", "version": "4.10.2"}, "os": {"type": "Windows", "name": "Windows 10", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Microsoft/17.0.15+6-LTS"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=SCRAM-SHA-1, userName='kovalev', source='admin', password=<hidden>, mechanismProperties=<hidden>}, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@58d04d1b, com.mongodb.Jep395RecordCodecProvider@c014a5d, com.mongodb.KotlinCodecProvider@99bc15a]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[db.sciencepulse.ru:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=true, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=UNSPECIFIED, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null}
+2025-06-13 16:29:19 INFO  org.mongodb.driver.cluster - Cluster description not yet available. Waiting for 30000 ms before timing out
+2025-06-13 16:29:51 INFO  c.n.controller.NewsController - Обработана лента сайта https://misis.ru
+2025-06-13 16:29:55 INFO  c.n.controller.NewsController - Обработана лента сайта https://bsuedu.ru
+2025-06-13 16:29:57 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-13 16:30:03 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.istu.edu
+2025-06-13 16:30:06 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.hse.ru
+2025-06-13 16:30:09 INFO  c.n.controller.NewsController - Обработана лента сайта https://mrsu.ru
+2025-06-13 16:30:10 INFO  c.n.controller.NewsController - Обработана лента сайта https://mgsu.ru
+2025-06-13 16:30:13 INFO  c.n.controller.NewsController - Обработана лента сайта https://kf.bmstu.ru
+2025-06-13 16:30:13 INFO  c.n.controller.NewsController - Обработана лента сайта https://miet.ru
+2025-06-13 16:30:18 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.nsu.ru
+2025-06-13 16:30:32 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-13 16:30:32 INFO  c.n.controller.NewsController - Обработана лента сайта https://pstu.ru
+2025-06-13 16:30:34 INFO  c.n.controller.NewsController - Обработана лента сайта https://ssau.ru
+2025-06-13 16:30:34 INFO  c.n.controller.NewsController - Обработана лента сайта https://research.spbstu.ru
+2025-06-13 16:30:35 INFO  c.n.controller.NewsController - Обработана лента сайта https://rsmu.ru
+2025-06-13 16:30:37 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.itmo.ru
+2025-06-13 16:30:41 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.tpu.ru
+2025-06-13 16:30:45 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.susu.ru
+2025-06-13 16:31:07 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-13 16:39:33 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-14 21:58:29 ERROR c.n.controller.NewsController - Ошибка при обработке новостной ленты
+com.fasterxml.jackson.dataformat.csv.CsvWriteException: Schema specified that header line is to be written; but contains no column names
+	at com.fasterxml.jackson.dataformat.csv.CsvWriteException.from(CsvWriteException.java:25)
+	at com.fasterxml.jackson.dataformat.csv.CsvGenerator._reportMappingError(CsvGenerator.java:1108)
+	at com.fasterxml.jackson.dataformat.csv.CsvGenerator._handleFirstLine(CsvGenerator.java:1143)
+	at com.fasterxml.jackson.dataformat.csv.CsvGenerator._verifyValueWrite(CsvGenerator.java:1085)
+	at com.fasterxml.jackson.dataformat.csv.CsvGenerator.writeStartObject(CsvGenerator.java:638)
+	at com.fasterxml.jackson.core.base.GeneratorBase.writeStartObject(GeneratorBase.java:328)
+	at com.fasterxml.jackson.databind.node.ObjectNode.serialize(ObjectNode.java:505)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:39)
+	at com.fasterxml.jackson.databind.ser.std.SerializableSerializer.serialize(SerializableSerializer.java:20)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:503)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:423)
+	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1583)
+	at com.fasterxml.jackson.databind.ObjectWriter._writeValueAndClose(ObjectWriter.java:1289)
+	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1081)
+	at com.newssearch.service.CSVservice.JSONtoCSVtempClass.convertjsonToCsv(JSONtoCSVtempClass.java:23)
+	at com.newssearch.controller.NewsController.processNewsFeed(NewsController.java:77)
+	at com.newssearch.controller.NewsController.lambda$startProcessing$0(NewsController.java:45)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-06-14 21:59:53 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-14 22:33:43 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-14 22:34:04 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-15 14:14:54 ERROR c.n.controller.NewsController - Ошибка при обработке новостной ленты
+java.io.FileNotFoundException: messages.csv (Процесс не может получить доступ к файлу, так как этот файл занят другим процессом)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:123)
+	at com.newssearch.service.CSVservice.JSONtoCSVService.writeAllToCsv(JSONtoCSVService.java:48)
+	at com.newssearch.controller.NewsController.processNewsFeed(NewsController.java:91)
+	at com.newssearch.controller.NewsController.lambda$startProcessing$0(NewsController.java:47)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-06-15 14:15:16 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-15 14:17:39 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-15 15:36:51 ERROR c.n.controller.NewsController - Ошибка при обработке новостной ленты
+java.io.FileNotFoundException: messages.csv (Процесс не может получить доступ к файлу, так как этот файл занят другим процессом)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:155)
+	at com.newssearch.service.CSVservice.JSONtoCSVService.writeAllToCsv(JSONtoCSVService.java:62)
+	at com.newssearch.controller.NewsController.processNewsFeed(NewsController.java:91)
+	at com.newssearch.controller.NewsController.lambda$startProcessing$0(NewsController.java:47)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-06-15 15:37:09 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-15 15:37:52 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru

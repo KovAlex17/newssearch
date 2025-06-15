@@ -13,8 +13,8 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
 
-            //NewsController newsController = new NewsController();
-            //newsController.startProcessing();
+            NewsController newsController = new NewsController();
+            newsController.startProcessing();
 
             //NewsCombinerToCommonFile.combineNews();
 
@@ -23,18 +23,18 @@ public class Main {
 
 
         // 5. Сохранение в csv файл
-
-        CsvFileManager csvFileManager = new CsvFileManager("news_data.csv");
-        CsvDataProcessor csvDataProcessor = new CsvDataProcessor(csvFileManager);
-        NewsDataParser parser = new NewsDataParser();
-        NewsDataService service = new NewsDataService(csvDataProcessor, parser);
-
-        try {
-            service.processSaveJsonToCsv("llm_answer.json");
-            System.out.println("Данные успешно сохранены в " + "news_data.csv");
-        } catch (IOException e) {
-            System.err.println("Ошибка: " + e.getMessage());
-        }
+//
+//        CsvFileManager csvFileManager = new CsvFileManager("news_data.csv");
+//        CsvDataProcessor csvDataProcessor = new CsvDataProcessor(csvFileManager);
+//        NewsDataParser parser = new NewsDataParser();
+//        NewsDataService service = new NewsDataService(csvDataProcessor, parser);
+//
+//        try {
+//            service.processSaveJsonToCsv("llm_answer.json");
+//            System.out.println("Данные успешно сохранены в " + "news_data.csv");
+//        } catch (IOException e) {
+//            System.err.println("Ошибка: " + e.getMessage());
+//        }
 
     }
 }
