@@ -27,17 +27,17 @@ public class NewsFeedProcessor {
 
         try {
             Document doc = Jsoup.connect(url).get();
-            //System.out.println(doc);
             Elements items = doc.select(selector.getItemSelector());
-            System.out.println(items.size());
+            //System.out.println(items.size());
 
             for (Element newsItem : items) {
                 MessageContainer message = getMessageInfo(selector, newsItem);
                 if (message != null) {
-                    messages.add(message);
+//                    messages.add(message);
 //                    System.out.println("Title: " + message.getTitle());
 //                    System.out.println("Link: " + message.getLink());
-//                    System.out.println("Date: " + message.getDate());
+                    System.out.println("Date: " + message.getDate());
+                    return messages;
 //                    System.out.println("Text: " + message.getText());
 //                    System.out.println(" ");
                 }

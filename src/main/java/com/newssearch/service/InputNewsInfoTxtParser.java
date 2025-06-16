@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InputTxtParser {
+public class InputNewsInfoTxtParser {
 
-    public static List<HtmlSelector> readNewsFromFile(String filePath) throws IOException {
+    public List<HtmlSelector> readNewsFromFile(String filePath) throws IOException {
         List<HtmlSelector> newsItems = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
@@ -21,17 +21,11 @@ public class InputTxtParser {
             String[] parts = line.split(" ; ");
 
             if(parts.length == 1 && !parts[0].trim().isEmpty()){
-                switch (parts[0].trim()){
-                    case "FederalUniversities":
-                        group = "FederalUniversities";
-                        break;
-                    case "NationalUniversities":
-                        group = "NationalUniversities";
-                        break;
-                    case "FlagshipUniversities":
-                        group = "FlagshipUniversities";
-                        break;
-                    default: System.out.println("Incorrect University Group");
+                switch (parts[0].trim()) {
+                    case "FederalUniversities" -> group = "FederalUniversities";
+                    case "NationalUniversities" -> group = "NationalUniversities";
+                    case "FlagshipUniversities" -> group = "FlagshipUniversities";
+                    default -> System.out.println("Incorrect University Group");
                 }
             } else if (parts.length == 8) {
                 String mainUrlSelector = parts[0].trim();

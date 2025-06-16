@@ -2,11 +2,8 @@ package com.newssearch.controller;
 
 import com.newssearch.model.HtmlSelector;
 import com.newssearch.model.MessageContainer;
+import com.newssearch.service.*;
 import com.newssearch.service.CSVservice.JSONtoCSVService;
-import com.newssearch.service.DatabaseManager;
-import com.newssearch.service.MessageToJSONtempClass;
-import com.newssearch.service.NewsFeedProcessor;
-import com.newssearch.service.NewsFeedReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +14,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class NewsController {
-    private final NewsFeedReader newsFeedReader;
+    private final InputNewsInfoTxtParser inputNewsInfoTxtParser;
     private final NewsFeedProcessor newsFeedProcessor;
     private final DatabaseManager databaseManager;
 
@@ -25,7 +22,7 @@ public class NewsController {
     private final JSONtoCSVService jsoNtoCSVService;
 
     public NewsController() {
-        this.newsFeedReader = new NewsFeedReader();
+        this.inputNewsInfoTxtParser = new InputNewsInfoTxtParser();
         this.newsFeedProcessor = new NewsFeedProcessor();
         this.databaseManager = new DatabaseManager();
         this.messageToJSONtempClass = new MessageToJSONtempClass();
@@ -39,7 +36,7 @@ public class NewsController {
      */
     public void startProcessing() {
         try {
-            List<HtmlSelector> newsFeeds = newsFeedReader.readNewsFeeds("src/main/resources/news.txt");
+            List<HtmlSelector> newsFeeds = inputNewsInfoTxtParser.readNewsFromFile("src/main/resources/news.txt");
             if (!newsFeeds.isEmpty()) {
                 ExecutorService executorService = Executors.newFixedThreadPool(1);
 
@@ -87,7 +84,7 @@ public class NewsController {
                 }
                 jsoNtoCSVService.printJsonArray();
 
-                // Записываем все накопленные объекты в CSV
+
                 jsoNtoCSVService.writeAllToCsv("messages.csv");
 
 

@@ -753,3 +753,8 @@ java.io.FileNotFoundException: messages.csv (Процесс не может по
 	at java.base/java.lang.Thread.run(Thread.java:840)
 2025-06-15 15:37:09 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
 2025-06-15 15:37:52 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-06-16 12:36:45 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-06-16 12:48:27 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-06-16 12:49:40 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-06-16 12:49:41 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-06-16 12:49:42 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
