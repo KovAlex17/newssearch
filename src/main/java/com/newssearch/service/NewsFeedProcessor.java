@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsFeedProcessor {
+    private static final DateToUnionFormatService dateToUnionFormatService = new DateToUnionFormatService();
 
     /**
      * Обрабатывает новостную ленту и возвращает список сообщений.
@@ -21,6 +22,7 @@ public class NewsFeedProcessor {
      * @return Список сообщений.
      * @throws IOException Если произошла ошибка при подключении к сайту.
      */
+
     public List<MessageContainer> processNewsFeed(HtmlSelector selector) throws IOException {
         String url = selector.getMainUrlSelector() + "/" + selector.getUrlSelector();
         List<MessageContainer> messages = new ArrayList<>();
@@ -67,7 +69,7 @@ public class NewsFeedProcessor {
         String link = href.startsWith(selector.getMainUrlSelector()) ? href : selector.getMainUrlSelector() + href;
 
         String title = newsItem.select(selector.getTitleSelector()).text();
-        String date = newsItem.select(selector.getDateSelector()).text();
+        String date = dateToUnionFormatService.normalizeDate(newsItem.select(selector.getDateSelector()).text());
         if(date.equals("вчера")) return null;
         String text = extractText(selector.getTextSelector(), link);
 

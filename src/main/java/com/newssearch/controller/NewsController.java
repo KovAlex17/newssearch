@@ -21,12 +21,15 @@ public class NewsController {
     private final MessageToJSONtempClass messageToJSONtempClass;
     private final JSONtoCSVService jsoNtoCSVService;
 
+    private final DateToUnionFormatService dateToUnionFormatService;
+
     public NewsController() {
         this.inputNewsInfoTxtParser = new InputNewsInfoTxtParser();
         this.newsFeedProcessor = new NewsFeedProcessor();
         this.databaseManager = new DatabaseManager();
         this.messageToJSONtempClass = new MessageToJSONtempClass();
         this.jsoNtoCSVService = new JSONtoCSVService();
+        this.dateToUnionFormatService = new DateToUnionFormatService();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
@@ -78,6 +81,7 @@ public class NewsController {
 
 
                 for (MessageContainer message : messages) {
+
                     String jsonString = messageToJSONtempClass.convertToJson(message);
                     jsoNtoCSVService.addJsonObject(jsonString);
                     System.out.println(jsonString);
