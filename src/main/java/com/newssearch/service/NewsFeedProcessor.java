@@ -9,6 +9,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,6 @@ public class NewsFeedProcessor {
 //                    System.out.println("Title: " + message.getTitle());
 //                    System.out.println("Link: " + message.getLink());
                     System.out.println("Date: " + message.getDate());
-                    return messages;
 //                    System.out.println("Text: " + message.getText());
 //                    System.out.println(" ");
                 }
@@ -59,9 +60,23 @@ public class NewsFeedProcessor {
      * @return Объект MessageContainer с данными о новости.
      */
     private MessageContainer getMessageInfo(HtmlSelector selector, Element newsItem) {
-        String href = newsItem.select(selector.getLink1Selector()).attr(selector.getLink2Selector());
-        //System.out.println(href);
 
+        String date = newsItem.select(selector.getDateSelector()).text();
+
+        if (date.isEmpty()) {
+            date = "01.01.1980";
+        } else if(date.equals("вчера")) {
+            LocalDate yesterday = LocalDate.now().minusDays(1);
+            date = yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        } else {
+            LocalDate threshold = LocalDate.now().minusMonths(2);
+            date = dateToUnionFormatService.normalizeDate(date);
+
+            LocalDate newsDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+            if (newsDate.isBefore(threshold)) { return null; }
+        }
+
+        String href = newsItem.select(selector.getLink1Selector()).attr(selector.getLink2Selector());
             /* Если ссылка ведет на внешний источник, она игнорируется */
         if (isExternalLink(href, selector.getMainUrlSelector())) { return null; }
             /* Если ссылка на url внутри json, parse её дальше */
@@ -69,8 +84,7 @@ public class NewsFeedProcessor {
         String link = href.startsWith(selector.getMainUrlSelector()) ? href : selector.getMainUrlSelector() + href;
 
         String title = newsItem.select(selector.getTitleSelector()).text();
-        String date = dateToUnionFormatService.normalizeDate(newsItem.select(selector.getDateSelector()).text());
-        if(date.equals("вчера")) return null;
+
         String text = extractText(selector.getTextSelector(), link);
 
         return new MessageContainer(title, link, date, text);
@@ -85,7 +99,6 @@ public class NewsFeedProcessor {
 
         // Если ссылка начинается с основного домена, она внутренняя
         return !href.startsWith(mainUrl);
-
     }
 
     /**
