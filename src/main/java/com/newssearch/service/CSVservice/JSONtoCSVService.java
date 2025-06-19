@@ -26,14 +26,13 @@ public class JSONtoCSVService {
         boolean isEmpty = !fileExists || file.length() == 0;
 
         if (isEmpty) {
-            // Открываем поток в режиме append, но файл всё равно пустой
             try (BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(new FileOutputStream(fileName, true), StandardCharsets.UTF_8))) {
                 // Пишем BOM для Excel, если файл только что создан
                 if (!fileExists) {
                     writer.write("\uFEFF");
                 }
-                // Пишем заголовок
+                // Заголовок
                 Iterator<String> fieldNames = firstObject.fieldNames();
                 StringBuilder header = new StringBuilder();
                 while (fieldNames.hasNext()) {

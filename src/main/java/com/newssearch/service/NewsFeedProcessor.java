@@ -37,10 +37,10 @@ public class NewsFeedProcessor {
             for (Element newsItem : items) {
                 MessageContainer message = getMessageInfo(selector, newsItem);
                 if (message != null) {
-//                    messages.add(message);
+                    messages.add(message);
 //                    System.out.println("Title: " + message.getTitle());
 //                    System.out.println("Link: " + message.getLink());
-                    System.out.println("Date: " + message.getDate());
+//                    System.out.println("Date: " + message.getDate());
 //                    System.out.println("Text: " + message.getText());
 //                    System.out.println(" ");
                 }
@@ -63,7 +63,7 @@ public class NewsFeedProcessor {
 
         String date = newsItem.select(selector.getDateSelector()).text();
 
-        if (date.isEmpty()) {
+        if (date.isBlank()) {
             date = "01.01.1980";
         } else if(date.equals("вчера")) {
             LocalDate yesterday = LocalDate.now().minusDays(1);

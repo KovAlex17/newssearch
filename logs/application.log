@@ -989,3 +989,93 @@ Caused by: java.lang.IllegalArgumentException: Не удалось распар�
 	at com.newssearch.controller.NewsController.lambda$startProcessing$0(NewsController.java:51)
 	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1848)
 	... 3 common frames omitted
+2025-06-18 18:48:12 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-18 19:27:33 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-18 21:28:59 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-18 21:31:19 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-18 21:31:48 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-18 21:32:24 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-18 21:32:52 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-18 21:33:34 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-18 22:19:58 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 09:33:15 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 09:41:11 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 09:41:58 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 09:42:46 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 09:42:47 ERROR c.n.controller.NewsController - Failed to read news feeds from file
+java.io.FileNotFoundException: messagesExc.xlsx (Процесс не может получить доступ к файлу, так как этот файл занят другим процессом)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:123)
+	at com.newssearch.service.ExcelService.saveWorkbook(ExcelService.java:80)
+	at com.newssearch.service.ExcelService.updateWeeklySheets(ExcelService.java:26)
+	at com.newssearch.controller.NewsController.startProcessing(NewsController.java:61)
+	at com.newssearch.Main.main(Main.java:13)
+2025-06-19 09:45:31 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 09:46:08 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 09:53:05 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 09:55:10 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 10:37:26 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:02:13 ERROR c.n.controller.NewsController - Error handling news feeds: java.lang.NullPointerException: Cannot invoke "java.util.List.add(Object)" because the return value of "java.util.concurrent.ConcurrentHashMap.get(Object)" is null
+java.util.concurrent.CompletionException: java.lang.NullPointerException: Cannot invoke "java.util.List.add(Object)" because the return value of "java.util.concurrent.ConcurrentHashMap.get(Object)" is null
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:315)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:320)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1807)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.lang.NullPointerException: Cannot invoke "java.util.List.add(Object)" because the return value of "java.util.concurrent.ConcurrentHashMap.get(Object)" is null
+	at com.newssearch.controller.NewsController.processNewsFeed(NewsController.java:106)
+	at com.newssearch.controller.NewsController.lambda$startProcessing$0(NewsController.java:54)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804)
+	... 3 common frames omitted
+2025-06-19 11:07:23 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Новости ленты университета: unn получены, приступаю к группировке и сохранению в таблицу.
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Новости ленты университета: unn получены, приступаю к группировке и сохранению в таблицу.
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Новости ленты университета: unn получены, приступаю к группировке и сохранению в таблицу.
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Новости ленты университета: unn получены, приступаю к группировке и сохранению в таблицу.
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Новости ленты университета: unn получены, приступаю к группировке и сохранению в таблицу.
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Новости ленты университета: unn получены, приступаю к группировке и сохранению в таблицу.
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Новости ленты университета: unn получены, приступаю к группировке и сохранению в таблицу.
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Новости ленты университета: unn получены, приступаю к группировке и сохранению в таблицу.
+2025-06-19 11:10:04 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:11:01 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:36:39 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:39:33 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:46:38 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:46:54 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:47:34 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 11:50:25 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:22:51 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:24:24 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:24:24 ERROR c.n.controller.NewsController - Failed to read news feeds from file
+java.io.FileNotFoundException: messagesExc.xlsx (Процесс не может получить доступ к файлу, так как этот файл занят другим процессом)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:123)
+	at com.newssearch.service.ExcelService.saveWorkbook(ExcelService.java:94)
+	at com.newssearch.service.ExcelService.updateWeeklySheets(ExcelService.java:34)
+	at com.newssearch.controller.NewsController.startProcessing(NewsController.java:65)
+	at com.newssearch.Main.main(Main.java:13)
+2025-06-19 12:29:53 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:31:00 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:31:01 ERROR c.n.controller.NewsController - Failed to read news feeds from file
+java.io.FileNotFoundException: messagesExc.xlsx (Процесс не может получить доступ к файлу, так как этот файл занят другим процессом)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:123)
+	at com.newssearch.service.ExcelService.saveWorkbook(ExcelService.java:94)
+	at com.newssearch.service.ExcelService.updateWeeklySheets(ExcelService.java:34)
+	at com.newssearch.controller.NewsController.startProcessing(NewsController.java:65)
+	at com.newssearch.Main.main(Main.java:13)
+2025-06-19 12:31:09 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:37:32 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:38:14 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:38:19 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.nsu.ru
+2025-06-19 12:39:47 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:39:53 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.nsu.ru
+2025-06-19 12:41:35 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-06-19 12:41:41 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.nsu.ru

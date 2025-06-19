@@ -39,7 +39,8 @@ public class InputNewsInfoTxtParser {
 
                 newsItems.add(new HtmlSelector(group, mainUrlSelector, urlSelector, itemSelector, titleSelector, link1Selector, link2Selector, dateSelector, textSelector));
             } else {
-                System.err.println("Invalid line format: " + line);
+                //TODO
+                //System.err.println("Invalid line format: " + line);
             }
         }
 

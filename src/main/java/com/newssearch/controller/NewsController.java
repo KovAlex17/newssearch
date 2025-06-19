@@ -4,17 +4,15 @@ import com.newssearch.model.HtmlSelector;
 import com.newssearch.model.MessageContainer;
 import com.newssearch.service.*;
 import com.newssearch.service.CSVservice.JSONtoCSVService;
+import com.newssearch.service.ExcelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.*;
+
 
 public class NewsController {
     private final InputNewsInfoTxtParser inputNewsInfoTxtParser;
@@ -23,8 +21,9 @@ public class NewsController {
 
     private final MessageToJSONtempClass messageToJSONtempClass;
     private final JSONtoCSVService jsoNtoCSVService;
+    private final ExcelService excelService;
 
-    private final Set<String> allWeeks = ConcurrentHashMap.newKeySet();
+    private final ConcurrentHashMap<String, List<MessageContainer>> groupedMessagesByWeek;
 
     public NewsController() {
         this.inputNewsInfoTxtParser = new InputNewsInfoTxtParser();
@@ -32,6 +31,8 @@ public class NewsController {
         this.databaseManager = new DatabaseManager();
         this.messageToJSONtempClass = new MessageToJSONtempClass();
         this.jsoNtoCSVService = new JSONtoCSVService();
+        this.excelService = new ExcelService();
+        this.groupedMessagesByWeek = new ConcurrentHashMap<>();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
@@ -58,7 +59,15 @@ public class NewsController {
                 CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
                 executorService.shutdown();
 
-                //System.out.println(allWeeks);
+                excelService.updateWeeklySheets(groupedMessagesByWeek);
+
+
+//                for (Map.Entry<String, List<MessageContainer>> entry : groupedMessagesByWeek.entrySet()) {
+//                    System.out.println("Неделя " + entry.getKey() + ": " + entry.getValue().size() + " сообщений");
+//                    for (MessageContainer message : entry.getValue()) {
+//                        System.out.println("  - " + message.getTitle());
+//                    }
+//                }
 
             } else {
                 logger.info("No news feeds found in the file.");
@@ -83,21 +92,22 @@ public class NewsController {
 
                 //databaseManager.writeMessages(messages, collectionName, universityName);
 
-//                for (MessageContainer message : messages) {
-//                    messageToJSONtempClass.convertToJson(message);
-//                    System.out.println(messageToJSONtempClass.convertToJson(message));
-//                }
-
 
                 for (MessageContainer message : messages) {
                     String jsonString = messageToJSONtempClass.convertToJson(message);
                     jsoNtoCSVService.addJsonObject(jsonString);
-                    addWeek(message.getDate());
+
+                    String sheetName = excelService.parseSheetName(message.getDate());
+
+                    groupedMessagesByWeek
+                            .computeIfAbsent(sheetName, k -> new ArrayList<>())
+                            .add(message);
+
+                    excelService.addWeek(sheetName);
                 }
-                jsoNtoCSVService.printJsonArray();
 
 
-                jsoNtoCSVService.writeAllToCsv("messages.csv");
+                //jsoNtoCSVService.writeAllToCsv("messages.csv");
 
 
                 logger.info("Обработана лента сайта {}", selector.getMainUrlSelector());
@@ -128,18 +138,5 @@ public class NewsController {
         }
 
         return domain;
-    }
-
-    private void addWeek(String dateStr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate date = LocalDate.parse(dateStr, formatter);
-
-        // Определяем год и номер недели по ISO-8601
-        WeekFields wf     = WeekFields.ISO;
-        int yearBased   = date.get(wf.weekBasedYear());
-        int weekOfYear  = date.get(wf.weekOfWeekBasedYear());
-        String weekKey  = String.format("%d-W%02d", yearBased, weekOfYear);
-
-        allWeeks.add(weekKey);
     }
 }
