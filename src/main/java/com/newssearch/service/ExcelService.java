@@ -105,10 +105,17 @@ public class ExcelService {
      */
     public void updateWorkbookByWeekLists(Workbook workbook,
                                        ConcurrentHashMap<String, List<MessageContainer>> groupedMessagesByWeek) {
+
         groupedMessagesByWeek.forEach((weekKey, messages) -> {
             Sheet sheet = workbook.getSheet(weekKey);
 
-            int rowNum = sheet.getPhysicalNumberOfRows();
+            Set<String> existingLinks = collectExistingKeys(sheet);
+            messages.removeIf(msg -> {
+                String url = msg.getLink();
+                return existingLinks.contains(url);
+            });
+
+            int rowNum = sheet.getLastRowNum() + 1;
             for (MessageContainer message : messages) {
                 Row row = sheet.createRow(rowNum++);
 
@@ -121,6 +128,36 @@ public class ExcelService {
 
             }
         });
+    }
+
+    private Set<String> collectExistingKeys(Sheet sheet) {
+        Set<String> existingUrls = new HashSet<>();
+        int firstDataRow = sheet.getFirstRowNum() + 1;
+        int lastRow = sheet.getLastRowNum();
+
+        for (int i = firstDataRow; i <= lastRow; i++) {
+            Row row = sheet.getRow(i);
+            if (row == null) continue;
+            Cell urlCell = row.getCell(getColumnIndexByHeader(sheet, "URL"));
+            if (urlCell != null && urlCell.getCellType() == CellType.STRING) {
+                String url = urlCell.getStringCellValue().trim();
+                if (!url.isEmpty()) {
+                    existingUrls.add(url);
+                }
+            }
+        }
+        return existingUrls;
+    }
+    private int getColumnIndexByHeader(Sheet sheet, String headerName) {
+        Row headerRow = sheet.getRow(sheet.getFirstRowNum());
+
+        for (Cell cell : headerRow) {
+            if (cell.getCellType() == CellType.STRING &&
+                    cell.getStringCellValue().equalsIgnoreCase(headerName)) {
+                return cell.getColumnIndex();
+            }
+        }
+        return -1;
     }
 
 
