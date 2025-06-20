@@ -29,6 +29,11 @@ public class ExcelService {
         addMissingSheets(workbook, allWeeks);
         sortingAllSheets(workbook, allWeeks);
 
+
+        CombinerNewsToOneArray.exportToFile(groupedMessagesByWeek, "MessagesForGPT.txt");
+
+
+
         updateWorkbookByWeekLists(workbook, groupedMessagesByWeek);
 
         saveWorkbook(workbook, outputFile);
