@@ -30,3 +30,6 @@ bin/
 
 /target/
 /build/
+config.properties
+feed.xml
+feed1.html
