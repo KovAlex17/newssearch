@@ -1096,3 +1096,168 @@ java.io.FileNotFoundException: messagesExc.xlsx (Процесс не может 
 2025-06-20 15:49:15 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
 2025-06-20 15:50:33 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
 2025-06-20 16:20:42 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:04:55 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:05:41 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:07:23 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:08:45 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:11:12 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:12:31 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:21:12 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:21:51 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:26:38 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:27:29 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:28:50 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:30:21 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:33:49 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:37:47 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:38:52 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:41:50 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 20:57:39 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:00:29 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:00:59 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:03:24 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:07:19 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:08:54 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:11:27 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:14:50 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:16:11 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:16:33 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-07-03 21:16:36 INFO  c.n.controller.NewsController - Обработана лента сайта https://mrsu.ru
+2025-07-03 21:16:37 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:21:26 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-07-03 21:21:30 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-07-03 21:21:36 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
+2025-07-03 21:21:39 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-07-03 21:21:41 INFO  c.n.controller.NewsController - Обработана лента сайта https://narfu.ru
+2025-07-03 21:21:44 INFO  c.n.controller.NewsController - Обработана лента сайта https://ncfu.ru
+2025-07-03 21:21:48 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.sfu-kras.ru
+2025-07-03 21:21:50 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:22:41 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-07-03 21:22:47 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
+2025-07-03 21:22:49 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:26:57 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-07-03 21:27:03 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
+2025-07-03 21:27:04 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:28:41 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-07-03 21:28:45 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-07-03 21:28:50 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
+2025-07-03 21:28:54 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-07-03 21:28:55 INFO  c.n.controller.NewsController - Обработана лента сайта https://narfu.ru
+2025-07-03 21:28:57 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:29:26 ERROR c.n.controller.NewsController - Failed to read news feeds from file
+java.io.FileNotFoundException: messagesExc.xlsx (Процесс не может получить доступ к файлу, так как этот файл занят другим процессом)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:123)
+	at com.newssearch.service.ExcelService.saveWorkbook(ExcelService.java:122)
+	at com.newssearch.service.ExcelService.updateWeeklySheets(ExcelService.java:60)
+	at com.newssearch.controller.NewsController.startProcessing(NewsController.java:83)
+	at com.newssearch.Main.main(Main.java:13)
+2025-07-03 21:29:57 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-07-03 21:30:00 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-07-03 21:30:05 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
+2025-07-03 21:30:09 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-07-03 21:30:11 INFO  c.n.controller.NewsController - Обработана лента сайта https://narfu.ru
+2025-07-03 21:30:13 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:31:41 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-07-03 21:31:44 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-07-03 21:31:50 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
+2025-07-03 21:31:53 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-07-03 21:31:55 INFO  c.n.controller.NewsController - Обработана лента сайта https://narfu.ru
+2025-07-03 21:31:57 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:35:47 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-07-03 21:35:51 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-07-03 21:35:56 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
+2025-07-03 21:36:00 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-07-03 21:36:02 INFO  c.n.controller.NewsController - Обработана лента сайта https://narfu.ru
+2025-07-03 21:36:03 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:37:02 INFO  c.n.controller.NewsController - Обработана лента сайта https://kantiana.ru
+2025-07-03 21:37:05 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.dvfu.ru
+2025-07-03 21:37:10 INFO  c.n.controller.NewsController - Обработана лента сайта https://media.kpfu.ru
+2025-07-03 21:37:14 INFO  c.n.controller.NewsController - Обработана лента сайта https://science.cfuv.ru
+2025-07-03 21:37:16 INFO  c.n.controller.NewsController - Обработана лента сайта https://narfu.ru
+2025-07-03 21:37:17 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:38:30 INFO  c.n.controller.NewsController - Обработана лента сайта https://ncfu.ru
+2025-07-03 21:38:35 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.sfu-kras.ru
+2025-07-03 21:38:37 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:40:12 INFO  c.n.controller.NewsController - Обработана лента сайта https://misis.ru
+2025-07-03 21:40:18 INFO  c.n.controller.NewsController - Обработана лента сайта https://bsuedu.ru
+2025-07-03 21:40:29 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.hse.ru
+2025-07-03 21:40:32 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:41:43 INFO  c.n.controller.NewsController - Обработана лента сайта https://misis.ru
+2025-07-03 21:41:47 INFO  c.n.controller.NewsController - Обработана лента сайта https://bsuedu.ru
+2025-07-03 21:41:49 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.hse.ru
+2025-07-03 21:41:50 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:42:54 INFO  c.n.controller.NewsController - Обработана лента сайта https://misis.ru
+2025-07-03 21:42:58 INFO  c.n.controller.NewsController - Обработана лента сайта https://bsuedu.ru
+2025-07-03 21:42:59 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.hse.ru
+2025-07-03 21:43:01 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:48:58 INFO  c.n.controller.NewsController - Обработана лента сайта https://misis.ru
+2025-07-03 21:49:02 INFO  c.n.controller.NewsController - Обработана лента сайта https://bsuedu.ru
+2025-07-03 21:49:14 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.hse.ru
+2025-07-03 21:49:15 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:49:38 INFO  c.n.controller.NewsController - Обработана лента сайта https://misis.ru
+2025-07-03 21:49:43 INFO  c.n.controller.NewsController - Обработана лента сайта https://bsuedu.ru
+2025-07-03 21:49:44 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.hse.ru
+2025-07-03 21:49:46 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:51:44 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.istu.edu
+2025-07-03 21:51:46 INFO  c.n.controller.NewsController - Обработана лента сайта https://mrsu.ru
+2025-07-03 21:51:50 INFO  c.n.controller.NewsController - Обработана лента сайта https://miet.ru
+2025-07-03 21:51:52 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:53:03 ERROR c.n.controller.NewsController - Failed to read news feeds from file
+java.io.FileNotFoundException: messagesExc.xlsx (Процесс не может получить доступ к файлу, так как этот файл занят другим процессом)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:123)
+	at com.newssearch.service.ExcelService.saveWorkbook(ExcelService.java:116)
+	at com.newssearch.service.ExcelService.updateWeeklySheets(ExcelService.java:54)
+	at com.newssearch.controller.NewsController.startProcessing(NewsController.java:83)
+	at com.newssearch.Main.main(Main.java:13)
+2025-07-03 21:53:30 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.istu.edu
+2025-07-03 21:53:32 INFO  c.n.controller.NewsController - Обработана лента сайта https://mrsu.ru
+2025-07-03 21:53:35 INFO  c.n.controller.NewsController - Обработана лента сайта https://miet.ru
+2025-07-03 21:53:36 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:56:04 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.istu.edu
+2025-07-03 21:56:06 INFO  c.n.controller.NewsController - Обработана лента сайта https://mrsu.ru
+2025-07-03 21:56:09 INFO  c.n.controller.NewsController - Обработана лента сайта https://miet.ru
+2025-07-03 21:56:11 INFO  c.n.controller.NewsController - Обработана лента сайта https://nauka.unn.ru
+2025-07-03 21:57:05 INFO  c.n.controller.NewsController - Обработана лента сайта https://mgsu.ru
+2025-07-03 21:57:07 INFO  c.n.controller.NewsController - Обработана лента сайта https://kf.bmstu.ru
+2025-07-03 21:57:51 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.nsu.ru
+2025-07-03 21:58:04 INFO  c.n.controller.NewsController - Обработана лента сайта https://pstu.ru
+2025-07-03 22:01:25 INFO  c.n.controller.NewsController - Обработана лента сайта https://ssau.ru
+2025-07-03 22:01:26 INFO  c.n.controller.NewsController - Обработана лента сайта https://research.spbstu.ru
+2025-07-03 22:01:28 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.itmo.ru
+2025-07-03 22:04:02 INFO  c.n.controller.NewsController - Обработана лента сайта https://ssau.ru
+2025-07-03 22:04:03 INFO  c.n.controller.NewsController - Обработана лента сайта https://research.spbstu.ru
+2025-07-03 22:04:05 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.itmo.ru
+2025-07-03 22:06:01 ERROR c.n.controller.NewsController - Failed to read news feeds from file
+java.io.FileNotFoundException: messagesExc.xlsx (Процесс не может получить доступ к файлу, так как этот файл занят другим процессом)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:123)
+	at com.newssearch.service.ExcelService.saveWorkbook(ExcelService.java:116)
+	at com.newssearch.service.ExcelService.updateWeeklySheets(ExcelService.java:54)
+	at com.newssearch.controller.NewsController.startProcessing(NewsController.java:83)
+	at com.newssearch.Main.main(Main.java:13)
+2025-07-03 22:06:28 INFO  c.n.controller.NewsController - Обработана лента сайта https://ssau.ru
+2025-07-03 22:06:29 INFO  c.n.controller.NewsController - Обработана лента сайта https://research.spbstu.ru
+2025-07-03 22:06:31 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.itmo.ru
+2025-07-03 22:07:56 INFO  c.n.controller.NewsController - Обработана лента сайта https://ssau.ru
+2025-07-03 22:07:57 INFO  c.n.controller.NewsController - Обработана лента сайта https://research.spbstu.ru
+2025-07-03 22:07:58 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.itmo.ru
+2025-07-03 22:10:42 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.sgu.ru
+2025-07-03 22:10:46 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.tpu.ru
+2025-07-03 22:10:54 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.susu.ru
+2025-07-03 22:11:29 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.sgu.ru
+2025-07-03 22:12:56 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.tpu.ru
+2025-07-03 22:12:59 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.susu.ru
+2025-07-03 22:17:24 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.tpu.ru
+2025-07-03 22:17:27 INFO  c.n.controller.NewsController - Обработана лента сайта https://www.susu.ru
+2025-07-03 22:18:25 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.tpu.ru
+2025-07-03 22:19:01 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.tpu.ru
+2025-07-03 22:19:54 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.tpu.ru
+2025-07-03 22:22:17 INFO  c.n.controller.NewsController - Обработана лента сайта https://news.tpu.ru

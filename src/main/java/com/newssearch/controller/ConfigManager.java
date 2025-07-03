@@ -28,7 +28,7 @@ public class ConfigManager {
     }
 
     public static String getOpenRouterApiKey() {
-        return getProperty("openrouter.api.key");
+        return getProperty("openrouter.api.key2");
     }
 
 }

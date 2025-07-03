@@ -6,6 +6,8 @@ public class MessageContainer {
     private final String date;
     private final String text;
 
+    private int numOfPriority;
+
     public MessageContainer(String title, String link, String date, String text) {
         this.title = title;
         this.link = link;
@@ -28,4 +30,13 @@ public class MessageContainer {
     public String getText() {
         return text;
     }
+
+    public int getNumOfPriority() {
+        return numOfPriority;
+    }
+
+    public void setNumOfPriority(int numOfPriority) {
+        this.numOfPriority = numOfPriority;
+    }
+
 }

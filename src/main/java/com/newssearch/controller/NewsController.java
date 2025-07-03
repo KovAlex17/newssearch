@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 
 
@@ -23,7 +24,7 @@ public class NewsController {
     private final JSONtoCSVService jsoNtoCSVService;
     private final ExcelService excelService;
 
-    private final ConcurrentHashMap<String, List<MessageContainer>> groupedMessagesByWeek;
+    private final ConcurrentHashMap<String, ConcurrentHashMap<String, MessageContainer>> allFeedsGroupedMessagesByWeek;
 
     public NewsController() {
         this.inputNewsInfoTxtParser = new InputNewsInfoTxtParser();
@@ -32,7 +33,7 @@ public class NewsController {
         this.messageToJSONtempClass = new MessageToJSONtempClass();
         this.jsoNtoCSVService = new JSONtoCSVService();
         this.excelService = new ExcelService();
-        this.groupedMessagesByWeek = new ConcurrentHashMap<>();
+        this.allFeedsGroupedMessagesByWeek = new ConcurrentHashMap<>();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
@@ -59,7 +60,27 @@ public class NewsController {
                 CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
                 executorService.shutdown();
 
-                excelService.updateWeeklySheets(groupedMessagesByWeek);
+
+//                for (Map.Entry<String, ConcurrentHashMap<String, MessageContainer>> weekEntry : allFeedsGroupedMessagesByWeek.entrySet()) {
+//                    String weekKey = weekEntry.getKey();
+//                    ConcurrentHashMap<String, MessageContainer> messagesMap = weekEntry.getValue();
+//
+//                    System.out.println("Неделя: " + weekKey);
+//                    for (Map.Entry<String, MessageContainer> msgEntry : messagesMap.entrySet()) {
+//                        String link = msgEntry.getKey();
+//                        MessageContainer msg = msgEntry.getValue();
+//
+//                        // Пример вывода основных полей
+//                        System.out.println("  Ссылка: " + link);
+//                        System.out.println("  Заголовок: " + msg.getTitle());
+//                        System.out.println("  Дата: " + msg.getDate());
+//                        System.out.println("  Текст: " + msg.getText());
+//                        System.out.println("  ---");
+//                    }
+//                }
+
+
+                excelService.updateWeeklySheets(allFeedsGroupedMessagesByWeek);
 
 
 //                for (Map.Entry<String, List<MessageContainer>> entry : groupedMessagesByWeek.entrySet()) {
@@ -94,14 +115,14 @@ public class NewsController {
 
 
                 for (MessageContainer message : messages) {
-                    String jsonString = messageToJSONtempClass.convertToJson(message);
-                    jsoNtoCSVService.addJsonObject(jsonString);
-
+                    //String jsonString = messageToJSONtempClass.convertToJson(message);
+                    //jsoNtoCSVService.addJsonObject(jsonString);
                     String sheetName = excelService.parseSheetName(message.getDate());
 
-                    groupedMessagesByWeek
-                            .computeIfAbsent(sheetName, k -> new ArrayList<>())
-                            .add(message);
+                    allFeedsGroupedMessagesByWeek
+                            .computeIfAbsent(sheetName, k -> new ConcurrentHashMap<String, MessageContainer>())
+                            .put(message.getLink(), message);
+
 
                     excelService.addWeek(sheetName);
                 }

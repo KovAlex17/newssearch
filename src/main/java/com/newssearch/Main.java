@@ -14,7 +14,6 @@ public class Main {
 
             //NewsCombinerToCommonFile.combineNews();
 
-            //GptFilterService.gptFiltering();
 
 
     }

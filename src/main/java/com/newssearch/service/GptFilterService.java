@@ -1,10 +1,6 @@
 package com.newssearch.service;
 
 import com.newssearch.controller.ConfigManager;
-import com.newssearch.service.CSVservice.CsvDataProcessor;
-import com.newssearch.service.CSVservice.CsvFileManager;
-import com.newssearch.service.CSVservice.NewsDataParser;
-import com.newssearch.service.CSVservice.NewsDataService;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -15,28 +11,32 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class GptFilterService {
     private static final String OPENROUTER_API_KEY = ConfigManager.getOpenRouterApiKey();
     private static final String OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
     private static final String MODEL = "deepseek/deepseek-r1:free";
 
-    private static final String OUTPUT_FILE = "llm_results2.txt";
-    private static final String OUTPUT_JSON_FILE = "llm_answer2.json";
+    private static final String OUTPUT_FILE = "llm_results.txt";
+    //private static final String OUTPUT_JSON_FILE = "llm_answer.json";
 
-    public static void main(String[] args) {
-        ConfigManager configManager = new ConfigManager();
-        System.out.println(configManager.getOpenRouterApiKey());
-        gptFiltering();
-    }
 
-    public static void gptFiltering() {
+    private static final HttpClient httpClient = HttpClient.newBuilder()
+            .version(HttpClient.Version.HTTP_2)
+            .build();
+
+    public String[][] gptFiltering() {
         try {
-
-// 1. Отправка в LLM и вывод ответа
 
             String textToProcess = new String(Files.readAllBytes(Paths.get("MessagesForGPT.txt")), StandardCharsets.UTF_8);
             String systemPrompt = "Тебе нужно проанализировать новости и возвращать ответ строго в JSON-формате. " +
@@ -57,52 +57,81 @@ public class GptFilterService {
                     textToProcess +
                     "\nВерни JSON-объект со следующей структурой:\n" +
                     "{\n" +
-                    "  \"name\": Название университета,\n" +
-                    "  \"news_numbers\": [массив ссылок новостей],\n" +
-                    "  \"news_texts\": [массив текстов этих новостей],\n" +
-                    "  \"themes\": [массив индексов тематик из списка, к которым отнесены новости (от 1 до 9)]\n" +
+                    "  \"news_links\": [массив ссылок новостей],\n" +
+                    "  \"themes\": [массив индексов тематик из списка, к которым отнесены новости (от 1 до 9), если не подходит ни к какой - 0]\n" +
                     "}\n\n" +
                     "Указания:\n" +
-                    "1. Сохраняй соответствие между элементами массивов (первый номер - первый текст - первая тематика), а также пиши текст новостей полностью, не сокращай (но без индексов).\n" +
-                    "2. Возвращай ТОЛЬКО валидный JSON, без дополнительного текста!";
+                    "1. Сохраняй соответствие между элементами массивов (ссылка и номер тематики из соответствующих массивов с одинаковым индексом - относятся к одной новости).\n" +
+                    "2. Если чего-то нет (пустая ссылка или текст), по умолчанию для ссылок пиши yandex.ru, для приоритета - -1" +
+                    "3. Возвращай ТОЛЬКО валидный JSON, без дополнительного текста!" +
+                    "4. Сохраняй описанную структуру ответа. Не обавляй лишних или пустых полей, пиши только написанные кавычки! (вот эти \" )";
 
-            long startTime = System.currentTimeMillis();
-            String llmResponse = askLLM(systemPrompt, userPrompt);
-            long endTime = System.currentTimeMillis();
-            System.out.println("Время выполнения запроса: " + (endTime - startTime) + " мс");
+
+            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+            AtomicBoolean stopTimer = new AtomicBoolean(false);
+            AtomicLong startTime = new AtomicLong(System.currentTimeMillis());
+
+            ScheduledFuture<?> timerHandle = scheduler.scheduleAtFixedRate(() -> {
+                if (stopTimer.get()) {
+                    return;
+                }
+                long elapsed = System.currentTimeMillis() - startTime.get();
+                long minutes = elapsed / 60000;
+                long seconds = (elapsed % 60000) / 1000;
+                long millis = elapsed % 1000;
+                System.out.printf("\rЖдем ответ от LLM, прошло времени: %02d:%02d.%02d", minutes, seconds, millis);
+                System.out.flush();
+            }, 0, 1, TimeUnit.MILLISECONDS);
+
+            String llmResponse;
+            try {
+                llmResponse = askLLM(systemPrompt, userPrompt);
+            } finally {
+                stopTimer.set(true);
+                timerHandle.cancel(true);
+                scheduler.shutdown();
+            }
+            System.out.printf("Всего прошло: %d мс%n", System.currentTimeMillis() - startTime.get());
+
+
 
             System.out.println("Ответ от LLM:\n" + llmResponse);
 
-// 2. Парсинг JSON
+            // Парсинг JSON
             JSONObject jsonResponse = new JSONObject(llmResponse);
-            JSONArray newsNumbers = jsonResponse.getJSONArray("news_numbers");
-            JSONArray newsTexts = jsonResponse.getJSONArray("news_texts");
+            JSONArray newsLinks = jsonResponse.getJSONArray("news_links");
             JSONArray themes = jsonResponse.getJSONArray("themes");
 
-// 3. Вывод в консоль
-            System.out.println("\nРезультаты парсинга:");
-            System.out.println("Номера научных новостей: " + newsNumbers);
-            System.out.println("Тексты новостей: " + newsTexts);
-            System.out.println("Тематики: " + themes);
 
-// 4. Сохранение в файл
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(OUTPUT_FILE));
-                 BufferedWriter writer2 = new BufferedWriter(new FileWriter(OUTPUT_JSON_FILE))) {
+            String[] newsLinksArray = new String[newsLinks.length()];
+            String[] themesArray = new String[themes.length()];
+            String[][] result = new String[2][];
 
-                writer.write("Номера научных новостей: " + newsNumbers + "\n");
-                writer.write("Тексты новостей: " + newsTexts + "\n");
-                writer.write("Тематики: " + themes + "\n");
-
-                writer2.write(llmResponse);
+            for (int i = 0; i < newsLinks.length(); i++) {
+                newsLinksArray[i] = newsLinks.getString(i);
+                themesArray[i] = String.valueOf(themes.getInt(i));
             }
+
+            result[0] = newsLinksArray;
+            result[1] = themesArray;
+
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(OUTPUT_FILE)) ) {
+                writer.write(llmResponse);
+            } catch (IOException e) {
+                System.err.println("Ошибка при сохранении ответа LLM в файл: " + e.getMessage());
+            }
+
+            return result;
 
 
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());
+            return null;
         }
     }
 
-    private static String askLLM(String systemPrompt, String userPrompt) throws Exception {
+    private String askLLM(String systemPrompt, String userPrompt) throws Exception {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(OPENROUTER_URL);
@@ -130,11 +159,11 @@ public class GptFilterService {
             // Получение и обработка ответа
             HttpResponse response = httpClient.execute(request);
             int statusCode = response.getStatusLine().getStatusCode();
-            System.out.println("HTTP Status: " + statusCode);
+            System.out.println(", HTTP Status: " + statusCode);
 
             String rawResponse = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
 
-            //System.out.println("Полный ответ API: " + rawResponse); // Для отладки
+            System.out.println("Полный ответ API: " + rawResponse);  // Нужно для периодической отладки
 
             JSONObject jsonResponse = new JSONObject(rawResponse);
             String content = jsonResponse.getJSONArray("choices")
@@ -143,8 +172,20 @@ public class GptFilterService {
                     .getString("content");
 
             // Очистка ответа от обратных кавычек и пометки json
-            content = content.replaceAll("^```json\\s*", "").replaceAll("\\s*```$", "").trim();
+            content = content.replaceAll("^```json\\s*", "").replaceAll("\\s*```$", "").trim();  /* Нужна, не удалять! */
             return content;
         }
     }
+
+    public static void main(String[] args) {
+        GptFilterService gptFilterService = new GptFilterService();
+        String[][] res = gptFilterService.gptFiltering();
+//        for (int i = 0; i < 3; i++) {
+//            for (int j = 0; j < res[1].length; j++) {
+//                System.out.printf(res[i][j] + "  ");
+//            }
+//            System.out.println("\n\n");
+//        }
+    }
+
 }

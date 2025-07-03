@@ -24,14 +24,29 @@ public class ExcelService {
             15 * 256, 40 * 256, 10 * 256, 30 * 256, 70 * 256, 15 * 256
     );
 
-    public void updateWeeklySheets(ConcurrentHashMap<String, List<MessageContainer>> groupedMessagesByWeek) throws IOException {
+    private final GptFilterService gptFilterService = new GptFilterService();
+
+
+    public void updateWeeklySheets(ConcurrentHashMap<String, ConcurrentHashMap<String, MessageContainer>> groupedMessagesByWeek) throws IOException {
+
         Workbook workbook = openOrCreateWorkbook(outputFile);
         addMissingSheets(workbook, allWeeks);
-        sortingAllSheets(workbook, allWeeks);
+
+        deleteFromMapExistingNews(workbook, groupedMessagesByWeek);
 
 
-        CombinerNewsToOneArray.exportToFile(groupedMessagesByWeek, "MessagesForGPT.txt");
 
+        boolean newNewsIsExisting = CombinerNewsToOneArray.exportToFile(groupedMessagesByWeek, "MessagesForGPT.txt");
+        String[][] llmAnswer;
+        if (newNewsIsExisting){
+            llmAnswer = gptFilterService.gptFiltering();
+
+        } else {
+            System.out.println("В файле Excel уже содержится свежая информация, обновление не требуется.");
+            return;
+        }
+
+        applyPrioritiesToGroupedMessagesByWeek(groupedMessagesByWeek, llmAnswer);
 
 
         updateWorkbookByWeekLists(workbook, groupedMessagesByWeek);
@@ -67,6 +82,8 @@ public class ExcelService {
 
             }
         }
+        // Сортировка листов
+        sortingAllSheets(wb, allWeeks);
     }
 
     public Set<String> existingSheetNames(Workbook wb) {
@@ -102,26 +119,24 @@ public class ExcelService {
     }
 
 
-    /**
-     * Заполняет Workbook данными по неделям.
-     *
-     * @param workbook             Объект Excel Workbook.
-     * @param groupedMessagesByWeek Мапа, где ключ — название листа (неделя), значение — список новостей в эту неделю.
-     */
-    public void updateWorkbookByWeekLists(Workbook workbook,
-                                       ConcurrentHashMap<String, List<MessageContainer>> groupedMessagesByWeek) {
-
-        groupedMessagesByWeek.forEach((weekKey, messages) -> {
+    public void deleteFromMapExistingNews(Workbook workbook,
+                                          ConcurrentHashMap<String, ConcurrentHashMap<String, MessageContainer>> groupedMessagesByWeek){
+        groupedMessagesByWeek.forEach((weekKey, messagesMap) -> {
             Sheet sheet = workbook.getSheet(weekKey);
 
             Set<String> existingLinks = collectExistingKeys(sheet);
-            messages.removeIf(msg -> {
-                String url = msg.getLink();
-                return existingLinks.contains(url);
-            });
+            existingLinks.forEach(messagesMap::remove);
+        });
+    }
+
+    public void updateWorkbookByWeekLists(Workbook workbook,
+                                          ConcurrentHashMap<String, ConcurrentHashMap<String, MessageContainer>>  groupedMessagesByWeek) {
+
+        groupedMessagesByWeek.forEach((weekKey, messagesMap) -> {
+            Sheet sheet = workbook.getSheet(weekKey);
 
             int rowNum = sheet.getLastRowNum() + 1;
-            for (MessageContainer message : messages) {
+            for (MessageContainer message : messagesMap.values()) {
                 Row row = sheet.createRow(rowNum++);
 
                 row.createCell(0).setCellValue("University");
@@ -129,10 +144,36 @@ public class ExcelService {
                 row.createCell(2).setCellValue(message.getDate());
                 row.createCell(3).setCellValue(message.getLink());
                 row.createCell(4).setCellValue(message.getText());
-                row.createCell(5).setCellValue("1 ... 9");
+                row.createCell(5).setCellValue(message.getNumOfPriority());
 
             }
         });
+    }
+
+    /**
+     * Метод заполняет поле numOfPriority у каждого MessageContainer
+     * в groupedMessagesByWeek значениями из llmAnswer.
+     *
+     * @param groupedMessagesByWeek  карта: ключ – неделя, значение – карта ссылок → MessageContainer
+     * @param llmAnswer             результат LLM: [0] – массив ссылок, [1] – массив тематик (строки цифр)
+     */
+    public void applyPrioritiesToGroupedMessagesByWeek( ConcurrentHashMap<String, ConcurrentHashMap<String, MessageContainer>> groupedMessagesByWeek,
+            String[][] llmAnswer){
+
+        String[] links = llmAnswer[0];
+        String[] priorities = llmAnswer[1];
+
+
+        for (int i = 0; i < links.length; i++) {
+            String link = links[i];
+            int priority = Integer.parseInt(priorities[i]);
+            groupedMessagesByWeek.values().forEach(map -> {
+                MessageContainer container = map.get(link);
+                if (container != null) {
+                    container.setNumOfPriority(priority);
+                }
+            });
+        }
     }
 
     private Set<String> collectExistingKeys(Sheet sheet) {

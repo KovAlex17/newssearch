@@ -6,33 +6,41 @@ import com.newssearch.model.MessageContainer;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 public class CombinerNewsToOneArray {
 
-    public static void exportToFile(
-            ConcurrentHashMap<String, List<MessageContainer>> groupedMessagesByWeek,
+    public static boolean exportToFile(
+            ConcurrentHashMap<String,ConcurrentHashMap<String, MessageContainer>> groupedMessagesByWeek,
             String outputPath) throws IOException {
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
-            for (Map.Entry<String, List<MessageContainer>> entry : groupedMessagesByWeek.entrySet()) {
-                List<MessageContainer> messages = entry.getValue();
+        boolean hasAnyNews = groupedMessagesByWeek.values().stream()
+                .anyMatch(innerMap -> !innerMap.isEmpty());
 
-                for (MessageContainer msg : messages) {
+        if(!hasAnyNews){
+            return false;
+        } else {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+                for (Map.Entry<String, ConcurrentHashMap<String, MessageContainer>> entry : groupedMessagesByWeek.entrySet()) {
+                    ConcurrentHashMap<String, MessageContainer> messages = entry.getValue();
 
-                    String infoToLlm = "\"link\":\"" + msg.getLink() +
-                            "\",\"text\":\"" + msg.getText() + "\"";
+                    for (MessageContainer msg : messages.values()) {
 
-                    writer.write(infoToLlm);
-                    writer.newLine();
+                        String infoToLlm = "\"link\":\"" + msg.getLink() +
+                                "\",\"text\":\"" + msg.getText() + "\"";
+
+                        writer.write(infoToLlm);
+                        writer.newLine();
+                    }
+
                 }
-
+                writer.flush();
             }
-            writer.flush();
         }
+
+        return true;
     }
 
 }
